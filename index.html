@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="mino0123">
+
+
+    <title>mino0123.github.io - mino0123.github.io</title>
+    <link rel="canonical" href="http://localhost:1313/">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+<link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<link href="http://localhost:1313/css/main.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/monokai_sublime.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+    <link href="http://localhost:1313/index.xml" rel="alternate" type="application/rss+xml" title="mino0123.github.io" />
+</head>
+
+<body>
+<nav role="navigation" class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header group">
+        <h1 class="name">
+            <a href="http://localhost:1313"class="navbar-brand">mino0123.github.io</a>
+        </h1>
+        <ul class="nav-links">
+            <li class="text-link">
+                <a href="http://localhost:1313/index.xml">
+                    <i class="fa fa-rss-square fa-lg"></i>
+                </a>
+            </li>
+            <li class="text-link">
+                <a href="https://twitter.com/mino0123">
+                    <i class="fa fa-twitter-square fa-lg"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+    
+        <div class="well well-sm">
+    <h4 class="post-title">
+        <a href="http://localhost:1313/2014/12/07/%E6%96%B0%E3%83%96%E3%83%AD%E3%82%B0">ブログを新しくした</a>
+    </h4>
+    <small class="pull-right">2014/12/07 04:00:00</small>
+    <hr>
+    <p><p>golang製の静的サイトジェネレータである <a href="http://gohugo.io/">Hugo</a> を使った。</p>
+
+<p><a href="http://github.com/spf13/hugo/tree/master/examples/blog">examples/blog</a>
+ がそのまま動いたのでうまくいくかと思いきや、そこそこ面倒くさかった。</p>
+
+<ul>
+<li><p>configでパーマリンクを指定したとき、日本語が含まれていると生成されるファイルだけパーセントエンコードされリンクが切れる。</p></li>
+
+<li><p>それを直そうとcloneしてきたら path.Join 使ってたところがすべて filepath.Join になっててWindowsだとファイル区切りが\になってた。</p></li>
+</ul>
+
+<p>そもそも url と生成時のファイル生成のパスの扱いが同じ関数で行われている。</p>
+
+<p>結局、</p>
+
+<ul>
+<li>hugolib/permalinks.go 内 pageToPermalinkFilename で Urlize を止める。</li>
+<li>helpers/url.go の filepath を path にもどす。</li>
+</ul>
+
+<p>という修正をやって動かしてる。</p>
+
+<p>後者に関してはissueは挙がってたしそのうち直るだろうたぶん。</p>
+
+<ul>
+<li><a href="https://github.com/spf13/hugo/issues/604">#604 Wrong directory generated for newly created content on Windows</a></li>
+<li><a href="https://github.com/spf13/hugo/issues/660">#660 Failing unit tests on windows due forward slash vs back slash</a></li>
+<li><a href="https://github.com/spf13/hugo/issues/687">#687 MakePermalink generate backslash on Windows</a></li>
+</ul>
+
+<p>あとコードのハイライトは pygments 使おうと思ったけどなぜかpタグがcode内にでてくる
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #f92672">&lt;</span><span style="color: #a6e22e">p</span><span style="color: #f92672">&gt;</span><span style="color: #66d9ef">function</span> <span style="color: #a6e22e">func</span><span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{</span>
+    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">v</span><span style="color: #f8f8f2">;</span>
+    <span style="color: #a6e22e">v</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">;</span>
+    <span style="color: #a6e22e">v</span> <span style="color: #f92672">=</span> <span style="color: #960050; background-color: #1e0010">‘</span><span style="color: #a6e22e">string</span><span style="color: #960050; background-color: #1e0010">’</span><span style="color: #f8f8f2">;</span>
+    <span style="color: #a6e22e">v</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">function</span> <span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{};</span>
+<span style="color: #f8f8f2">}</span><span style="color: #f92672">&lt;</span><span style="color: #960050; background-color: #1e0010">/p&gt;</span>
+</pre></div>
+
+ので Hilight.js の monokai sublime テーマにした。</p>
+
+<pre><code class="language-js">function func() {
+    var v;
+    v = 0;
+    v = 'string';
+    v = function () {};
+}
+</code></pre>
+</p>
+</div>
+    
+        <footer>
+            <div class="row">
+                <hr>
+                <div class="col-sm-12">
+                    <small class="pull-right">
+                    Built with <a href="http://gohugo.io/">Hugo</a>
+                    </small>
+                </div>
+            </div>
+        </footer>
+</div>
+<script>document.write('<script src="http://'
+        + (location.host || 'localhost').split(':')[0]
+		+ ':1313/livereload.js?mindelay=10"></'
+        + 'script>')</script></body>
+</html>

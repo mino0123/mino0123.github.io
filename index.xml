@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title> on mino0123.github.io </title>
+    <link>http://localhost:1313/</link>
+    <language>en-US</language>
+    <author>Enthusiastic Hugo User</author>
+    <rights>Copyright (c) 2014, Enthusiastic Hugo User; all rights reserved.</rights>
+    <updated>Sun, 07 Dec 2014 04:00:00 JST</updated>
+    
+    <item>
+      <title>ブログを新しくした</title>
+      <link>http://localhost:1313/2014/12/07/%E6%96%B0%E3%83%96%E3%83%AD%E3%82%B0</link>
+      <pubDate>Sun, 07 Dec 2014 04:00:00 JST</pubDate>
+      <author>Enthusiastic Hugo User</author>
+      <guid>http://localhost:1313/2014/12/07/%E6%96%B0%E3%83%96%E3%83%AD%E3%82%B0</guid>
+      <description>&lt;p&gt;golang製の静的サイトジェネレータである &lt;a href=&#34;http://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; を使った。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://github.com/spf13/hugo/tree/master/examples/blog&#34;&gt;examples/blog&lt;/a&gt;
+ がそのまま動いたのでうまくいくかと思いきや、そこそこ面倒くさかった。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;configでパーマリンクを指定したとき、日本語が含まれていると生成されるファイルだけパーセントエンコードされリンクが切れる。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;それを直そうとcloneしてきたら path.Join 使ってたところがすべて filepath.Join になっててWindowsだとファイル区切りが\になってた。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;そもそも url と生成時のファイル生成のパスの扱いが同じ関数で行われている。&lt;/p&gt;
+
+&lt;p&gt;結局、&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;hugolib/permalinks.go 内 pageToPermalinkFilename で Urlize を止める。&lt;/li&gt;
+&lt;li&gt;helpers/url.go の filepath を path にもどす。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;という修正をやって動かしてる。&lt;/p&gt;
+
+&lt;p&gt;後者に関してはissueは挙がってたしそのうち直るだろうたぶん。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/spf13/hugo/issues/604&#34;&gt;#604 Wrong directory generated for newly created content on Windows&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/spf13/hugo/issues/660&#34;&gt;#660 Failing unit tests on windows due forward slash vs back slash&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/spf13/hugo/issues/687&#34;&gt;#687 MakePermalink generate backslash on Windows&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;あとコードのハイライトは pygments 使おうと思ったけどなぜかpタグがcode内にでてくる
+&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;func&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color: #66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;v&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color: #a6e22e&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color: #a6e22e&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;‘&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;’&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color: #a6e22e&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;{};&lt;/span&gt;
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;/p&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+ので Hilight.js の monokai sublime テーマにした。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;function func() {
+    var v;
+    v = 0;
+    v = &#39;string&#39;;
+    v = function () {};
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
