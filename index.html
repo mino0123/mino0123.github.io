@@ -51,11 +51,130 @@
     
         <div class="well well-sm">
     <h4 class="post-title">
+        <a href="http://mino0123.github.io/2014/12/14/LightningAppBuilder">Lightning App Builder</a>
+    </h4>
+    <small class="pull-right">2014/12/14 06:00:00</small>
+    <hr>
+    <p>
+
+<p><a href="http://qiita.com/advent-calendar/2014/salesforce1">Salesforce1 Advent Calendar</a>
+14日目の記事です。</p>
+
+<p>Lightning App Builder についてデモ動画、</p>
+
+<p><a href="https://www.youtube.com/watch?v=f9HvfbNh70M&amp;list=UUEWplP9qrhNjXVggK5W5CvA">Salesforce World Tour Tokyo(2014年12月) - ～IoTと次世代モバイルアプリの最新事例紹介～アプリの開発スピードを革新するSalesforce1 Lightning～</a></p>
+
+<p>から得られる情報をまとめます。</p>
+
+<p>ちなみにまだデモで存在するだけなため、リリースまでにいろいろ変更される可能性があります。</p>
+
+<!--
+[developer.salesforce.com/lightning](https://developer.salesforce.com/lightning)
+-->
+
+<p>まずは App Builder に入る前のビューですが、</p>
+
+<p><a href="/img/2014/12/14/FlexiPageList.png" target="_blank">
+    <img src="/img/2014/12/14/FlexiPageList.png" style="width:100%;max-width:800px;">
+</a></p>
+
+<pre><code>ビジュアルアプリケーションビルダーには、Flexible Pagesを使用してSalesforce1 のカスタムアプリケーションページを作成するための使いやすいグラフィカルインターフェースが用意されています。
+</code></pre>
+
+<p>と書かれています。</p>
+
+<p>要するにLightning App Builder は Flexible Page をGUIで作成できるもの、ということでしょう。</p>
+
+<!-- ビューのURLは https://ap1.salesforce.com/_ui/flexipage/ui/FlexiPageListUi/d -->
+
+<p><a href="/img/2014/12/14/LightningAppBuilder01.png" target="_blank">
+    <img src="/img/2014/12/14/LightningAppBuilder01.png" style="width:100%;max-width:800px;">
+</a></p>
+
+<p>新規ボタンを押した後に立ち上がる App Builder の画面です。</p>
+
+<p>作成する画面の種別を3種類から選ぶようです。</p>
+
+<p>これによって作成したページを割り当てできる箇所が変わるのでしょう。</p>
+
+<p>翻訳後のレイアウト調整がまだなのか少しページが崩れていますが、本リリースまでには直ることでしょう多分。</p>
+
+<p>ページ種別を選択するとページのテンプレートの選択に移行します。</p>
+
+<ul>
+<li>テンプレートA(1領域)</li>
+</ul>
+
+<p><a href="/img/2014/12/14/LightningAppBuilder02.png" target="_blank">
+    <img src="/img/2014/12/14/LightningAppBuilder02.png" style="width:100%;max-width:800px;">
+</a></p>
+
+<ul>
+<li>テンプレートB(2領域)</li>
+</ul>
+
+<p><a href="/img/2014/12/14/LightningAppBuilder03.png" target="_blank">
+    <img src="/img/2014/12/14/LightningAppBuilder03.png" style="width:100%;max-width:800px;">
+</a></p>
+
+<ul>
+<li>テンプレートC(3領域)</li>
+</ul>
+
+<p><a href="/img/2014/12/14/LightningAppBuilder04.png" target="_blank">
+    <img src="/img/2014/12/14/LightningAppBuilder04.png" style="width:100%;max-width:800px;">
+</a></p>
+
+<p>まとめると、最大3つのエリアをもつページを作成することができ、</p>
+
+<p>各エリアはページを参照する端末によって表示される箇所が変わる、ということのようです。</p>
+
+<p>下に「AppExchange上でテンプレートを探す」というリンクがありますので
+もしかするとこれ以外のレイアウトもテンプレートとして作成・公開できるようになるのでしょうか。</p>
+
+<p>テンプレートを選択すると最後にページの名前を設定してドラッグ&amp;ドロップによるページ作成が始まります。</p>
+
+<p><a href="/img/2014/12/14/LightningAppBuilder05.png" target="_blank">
+    <img src="/img/2014/12/14/LightningAppBuilder05.png" style="width:100%;max-width:800px;">
+</a></p>
+
+<p>[標準コンポーネント], [カスタムコンポーネント] の下に [AppExchangeコンポーネント] が並んでいるのが分かります。</p>
+
+<p>いままでは ユーザがD&amp;Dで設定できてAppExchangeで公開できるUIはVisualforceページのみだった
+(カスタムコンポーネントでコンポーネント単位の公開はできるけど使用するのにコーディングが必要)
+のが、コンポーネント単位で公開しそこからユーザがD&amp;Dでページに組み込むことができるようになるようです。</p>
+
+<p>ページの設定の一番下に[処理]とありますが、Lightning Process Builderで作成した処理を割り当てたりできるのでしょうか。</p>
+
+<p><a href="/img/2014/12/14/LightningAppBuilder06.png" target="_blank">
+    <img src="/img/2014/12/14/LightningAppBuilder06.png" style="width:100%;max-width:800px;">
+</a></p>
+
+<p><a href="/img/2014/12/14/LightningAppBuilder09.png" target="_blank">
+    <img src="/img/2014/12/14/LightningAppBuilder09.png" style="width:100%;max-width:800px;">
+</a></p>
+
+<p>プレビューの端末を変更することもできます。</p>
+
+<p><a href="/img/2014/12/14/LightningAppBuilder10.png" target="_blank">
+    <img src="/img/2014/12/14/LightningAppBuilder10.png" style="width:100%;max-width:800px;">
+</a></p>
+
+<h3 id="まとめ:efbb8997069fcf1a0878ff17f0598ba5">まとめ</h3>
+
+<p>いままでの Salesforce は AppExchange で公開されたものをコーディングなしで自組織に組み込むことのできるUIとしてはVisualforceページが最小単位だったと思いますが、テンプレートやコンポーネントなど、より小さな単位でAppExchangeで公開可能にすることを目指しているようです。</p>
+</p>
+</div>
+    
+        <div class="well well-sm">
+    <h4 class="post-title">
         <a href="http://mino0123.github.io/2014/12/07/%E6%96%B0%E3%83%96%E3%83%AD%E3%82%B0">ブログを新しくした</a>
     </h4>
     <small class="pull-right">2014/12/07 04:00:00</small>
     <hr>
-    <p><p>golang製の静的サイトジェネレータである <a href="http://gohugo.io/">Hugo</a> を使った。</p>
+    <p>
+
+<p>golang製の静的サイトジェネレータである <a href="http://gohugo.io/">Hugo</a> を使った。</p>
 
 <p><a href="http://github.com/spf13/hugo/tree/master/examples/blog">examples/blog</a>
  がそのまま動いたのでうまくいくかと思いきや、そこそこ面倒くさかった。</p>
@@ -102,6 +221,116 @@
     v = 'string';
     v = function () {};
 }
+</code></pre>
+
+<h3 id="追記:d53c10dd05a7c61b37271a603513f0e7">追記</h3>
+
+<p>静的ファイルの追加が何故か1フォルダしか行われていなかった。
+chtimeで権限エラーになっていた。
+hugo.go で NewSyncer 後に
+<code>go
+syncer.NoTimes = true
+</code>
+を追加することで最終更新日の同期をやめさせて対応した。</p>
+
+<pre><code class="language-patch">diff --git a/commands/hugo.go b/commands/hugo.go
+index 6fd7fa2..21dad47 100644
+--- a/commands/hugo.go
++++ b/commands/hugo.go
+@@ -227,6 +229,7 @@ func copyStatic() error {
+    publishDir := helpers.AbsPathify(viper.GetString(&quot;PublishDir&quot;)) + &quot;/&quot;
+ 
+    syncer := fsync.NewSyncer()
++   syncer.NoTimes = true
+    syncer.NoTimes = viper.GetBool(&quot;notimes&quot;)
+    syncer.SrcFs = hugofs.SourceFs
+    syncer.DestFs = hugofs.DestinationFS
+diff --git a/helpers/url.go b/helpers/url.go
+index dd8d750..6b234b4 100644
+--- a/helpers/url.go
++++ b/helpers/url.go
+@@ -16,7 +16,7 @@ package helpers
+ import (
+    &quot;fmt&quot;
+    &quot;net/url&quot;
+-   &quot;path/filepath&quot;
++   &quot;path&quot;
+    &quot;strings&quot;
+ 
+    &quot;github.com/PuerkitoBio/purell&quot;
+@@ -68,7 +68,7 @@ func MakePermalink(host, plink string) *url.URL {
+        panic(fmt.Errorf(&quot;Can't make permalink from absolute link %q&quot;, plink))
+    }
+ 
+-   base.Path = filepath.Join(base.Path, p.Path)
++   base.Path = path.Join(base.Path, p.Path)
+ 
+    // path.Join will strip off the last /, so put it back if it was there.
+    if strings.HasSuffix(p.Path, &quot;/&quot;) &amp;&amp; !strings.HasSuffix(base.Path, &quot;/&quot;) {
+@@ -84,7 +84,7 @@ func UrlPrep(ugly bool, in string) string {
+        return x
+    } else {
+        x := PrettifyUrl(SanitizeUrl(in))
+-       if filepath.Ext(x) == &quot;.xml&quot; {
++       if path.Ext(x) == &quot;.xml&quot; {
+            return x
+        }
+        url, err := purell.NormalizeURLString(x, purell.FlagAddTrailingSlash)
+@@ -100,8 +100,8 @@ func UrlPrep(ugly bool, in string) string {
+ func PrettifyUrl(in string) string {
+    x := PrettifyPath(in)
+ 
+-   if filepath.Base(x) == &quot;index.html&quot; {
+-       return filepath.Dir(x)
++   if path.Base(x) == &quot;index.html&quot; {
++       return path.Dir(x)
+    }
+ 
+    if in == &quot;&quot; {
+@@ -115,17 +115,17 @@ func PrettifyUrl(in string) string {
+ // /section/name/  -&gt; /section/name.html
+ // /section/name.html -&gt; /section/name.html
+ func Uglify(in string) string {
+-   if filepath.Ext(in) == &quot;&quot; {
++   if path.Ext(in) == &quot;&quot; {
+        if len(in) &lt; 2 {
+            return &quot;/&quot;
+        }
+        // /section/name/  -&gt; /section/name.html
+-       return filepath.Clean(in) + &quot;.html&quot;
++       return path.Clean(in) + &quot;.html&quot;
+    } else {
+        name, ext := FileAndExt(in)
+        if name == &quot;index&quot; {
+            // /section/name/index.html -&gt; /section/name.html
+-           d := filepath.Dir(in)
++           d := path.Dir(in)
+            if len(d) &gt; 1 {
+                return d + ext
+            } else {
+@@ -133,7 +133,7 @@ func Uglify(in string) string {
+            }
+        } else {
+            // /section/name.html -&gt; /section/name.html
+-           return filepath.Clean(in)
++           return path.Clean(in)
+        }
+    }
+ }
+diff --git a/hugolib/permalinks.go b/hugolib/permalinks.go
+index 642de83..955401c 100644
+--- a/hugolib/permalinks.go
++++ b/hugolib/permalinks.go
+@@ -146,7 +146,8 @@ func pageToPermalinkTitle(p *Page, _ string) (string, error) {
+ func pageToPermalinkFilename(p *Page, _ string) (string, error) {
+    //var extension = p.Source.Ext
+    //var name = p.Source.Path()[0 : len(p.Source.Path())-len(extension)]
+-   return helpers.Urlize(p.Source.BaseFileName()), nil
++   return p.Source.BaseFileName(), nil
++   // return helpers.Urlize(p.Source.BaseFileName()), nil
+ }
+ 
+ // if the page has a slug, return the slug, else return the title
 </code></pre>
 </p>
 </div>

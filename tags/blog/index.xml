@@ -14,7 +14,9 @@
       <pubDate>Sun, 07 Dec 2014 04:00:00 JST</pubDate>
       <author>Enthusiastic Hugo User</author>
       <guid>http://mino0123.github.io/2014/12/07/%E6%96%B0%E3%83%96%E3%83%AD%E3%82%B0</guid>
-      <description>&lt;p&gt;golang製の静的サイトジェネレータである &lt;a href=&#34;http://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; を使った。&lt;/p&gt;
+      <description>
+
+&lt;p&gt;golang製の静的サイトジェネレータである &lt;a href=&#34;http://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; を使った。&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://github.com/spf13/hugo/tree/master/examples/blog&#34;&gt;examples/blog&lt;/a&gt;
  がそのまま動いたのでうまくいくかと思いきや、そこそこ面倒くさかった。&lt;/p&gt;
@@ -61,6 +63,116 @@
     v = &#39;string&#39;;
     v = function () {};
 }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;追記:d53c10dd05a7c61b37271a603513f0e7&#34;&gt;追記&lt;/h3&gt;
+
+&lt;p&gt;静的ファイルの追加が何故か1フォルダしか行われていなかった。
+chtimeで権限エラーになっていた。
+hugo.go で NewSyncer 後に
+&lt;code&gt;go
+syncer.NoTimes = true
+&lt;/code&gt;
+を追加することで最終更新日の同期をやめさせて対応した。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-patch&#34;&gt;diff --git a/commands/hugo.go b/commands/hugo.go
+index 6fd7fa2..21dad47 100644
+--- a/commands/hugo.go
++++ b/commands/hugo.go
+@@ -227,6 +229,7 @@ func copyStatic() error {
+    publishDir := helpers.AbsPathify(viper.GetString(&amp;quot;PublishDir&amp;quot;)) + &amp;quot;/&amp;quot;
+ 
+    syncer := fsync.NewSyncer()
++   syncer.NoTimes = true
+    syncer.NoTimes = viper.GetBool(&amp;quot;notimes&amp;quot;)
+    syncer.SrcFs = hugofs.SourceFs
+    syncer.DestFs = hugofs.DestinationFS
+diff --git a/helpers/url.go b/helpers/url.go
+index dd8d750..6b234b4 100644
+--- a/helpers/url.go
++++ b/helpers/url.go
+@@ -16,7 +16,7 @@ package helpers
+ import (
+    &amp;quot;fmt&amp;quot;
+    &amp;quot;net/url&amp;quot;
+-   &amp;quot;path/filepath&amp;quot;
++   &amp;quot;path&amp;quot;
+    &amp;quot;strings&amp;quot;
+ 
+    &amp;quot;github.com/PuerkitoBio/purell&amp;quot;
+@@ -68,7 +68,7 @@ func MakePermalink(host, plink string) *url.URL {
+        panic(fmt.Errorf(&amp;quot;Can&#39;t make permalink from absolute link %q&amp;quot;, plink))
+    }
+ 
+-   base.Path = filepath.Join(base.Path, p.Path)
++   base.Path = path.Join(base.Path, p.Path)
+ 
+    // path.Join will strip off the last /, so put it back if it was there.
+    if strings.HasSuffix(p.Path, &amp;quot;/&amp;quot;) &amp;amp;&amp;amp; !strings.HasSuffix(base.Path, &amp;quot;/&amp;quot;) {
+@@ -84,7 +84,7 @@ func UrlPrep(ugly bool, in string) string {
+        return x
+    } else {
+        x := PrettifyUrl(SanitizeUrl(in))
+-       if filepath.Ext(x) == &amp;quot;.xml&amp;quot; {
++       if path.Ext(x) == &amp;quot;.xml&amp;quot; {
+            return x
+        }
+        url, err := purell.NormalizeURLString(x, purell.FlagAddTrailingSlash)
+@@ -100,8 +100,8 @@ func UrlPrep(ugly bool, in string) string {
+ func PrettifyUrl(in string) string {
+    x := PrettifyPath(in)
+ 
+-   if filepath.Base(x) == &amp;quot;index.html&amp;quot; {
+-       return filepath.Dir(x)
++   if path.Base(x) == &amp;quot;index.html&amp;quot; {
++       return path.Dir(x)
+    }
+ 
+    if in == &amp;quot;&amp;quot; {
+@@ -115,17 +115,17 @@ func PrettifyUrl(in string) string {
+ // /section/name/  -&amp;gt; /section/name.html
+ // /section/name.html -&amp;gt; /section/name.html
+ func Uglify(in string) string {
+-   if filepath.Ext(in) == &amp;quot;&amp;quot; {
++   if path.Ext(in) == &amp;quot;&amp;quot; {
+        if len(in) &amp;lt; 2 {
+            return &amp;quot;/&amp;quot;
+        }
+        // /section/name/  -&amp;gt; /section/name.html
+-       return filepath.Clean(in) + &amp;quot;.html&amp;quot;
++       return path.Clean(in) + &amp;quot;.html&amp;quot;
+    } else {
+        name, ext := FileAndExt(in)
+        if name == &amp;quot;index&amp;quot; {
+            // /section/name/index.html -&amp;gt; /section/name.html
+-           d := filepath.Dir(in)
++           d := path.Dir(in)
+            if len(d) &amp;gt; 1 {
+                return d + ext
+            } else {
+@@ -133,7 +133,7 @@ func Uglify(in string) string {
+            }
+        } else {
+            // /section/name.html -&amp;gt; /section/name.html
+-           return filepath.Clean(in)
++           return path.Clean(in)
+        }
+    }
+ }
+diff --git a/hugolib/permalinks.go b/hugolib/permalinks.go
+index 642de83..955401c 100644
+--- a/hugolib/permalinks.go
++++ b/hugolib/permalinks.go
+@@ -146,7 +146,8 @@ func pageToPermalinkTitle(p *Page, _ string) (string, error) {
+ func pageToPermalinkFilename(p *Page, _ string) (string, error) {
+    //var extension = p.Source.Ext
+    //var name = p.Source.Path()[0 : len(p.Source.Path())-len(extension)]
+-   return helpers.Urlize(p.Source.BaseFileName()), nil
++   return p.Source.BaseFileName(), nil
++   // return helpers.Urlize(p.Source.BaseFileName()), nil
+ }
+ 
+ // if the page has a slug, return the slug, else return the title
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
