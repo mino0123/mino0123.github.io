@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Lightning on mino0123.github.io </title>
+    <link>http://mino0123.github.io/5ctags5clightning5cindex.html/</link>
+    <language>en-US</language>
+    <author>Enthusiastic Hugo User</author>
+    <rights>Copyright (c) 2014, Enthusiastic Hugo User; all rights reserved.</rights>
+    <updated>Wed, 17 Dec 2014 00:26:51 JST</updated>
+    
+    <item>
+      <title>Lightning開発者ガイドで紹介されてるログ出力関数</title>
+      <link>http://mino0123.github.io/2014/12/17/Lightning%E9%96%8B%E7%99%BA%E8%80%85%E3%82%AC%E3%82%A4%E3%83%89%E3%81%A7%E7%B4%B9%E4%BB%8B%E3%81%95%E3%82%8C%E3%81%A6%E3%82%8B%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B%E9%96%A2%E6%95%B0</link>
+      <pubDate>Wed, 17 Dec 2014 00:26:51 JST</pubDate>
+      <author>Enthusiastic Hugo User</author>
+      <guid>http://mino0123.github.io/2014/12/17/Lightning%E9%96%8B%E7%99%BA%E8%80%85%E3%82%AC%E3%82%A4%E3%83%89%E3%81%A7%E7%B4%B9%E4%BB%8B%E3%81%95%E3%82%8C%E3%81%A6%E3%82%8B%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B%E9%96%A2%E6%95%B0</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://developer.salesforce.com/docs/atlas.ja-jp.lightning.meta/lightning/debug_log_messages.htm&#34;&gt;https://developer.salesforce.com/docs/atlas.ja-jp.lightning.meta/lightning/debug_log_messages.htm&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;$A.log(string, [error]) メソッドを使用して、ログメッセージを JavaScript コンソールに書き出します&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;とあるが、使用しても出力されなかったので調査した。&lt;/p&gt;
+
+&lt;p&gt;まずはページ内で&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;$A.log.toString()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;を実行して関数の中身を参照。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;function (value, error) {
+  var trace;
+  if(this[&amp;quot;util&amp;quot;].$isError$(value)) {
+    error = value;
+    value = error.message
+  }
+  if(this[&amp;quot;util&amp;quot;].$isError$(error)) {
+    trace = this.$getStackTrace$(error)
+  }else {
+    if(error &amp;amp;&amp;amp; error.stack) {
+      trace = error.stack
+    }
+  }
+  this.$logInternal$(&amp;quot;Info&amp;quot;, value, error, trace)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;$A.log は内部で $A.$logInternal$ を呼び出していることが分かる。
+で&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;$A.$logInternal$.toString()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;を実行して出てきたのが&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;function (type, message, error, trace) {
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;ということで $A.$logInternal$ には中身がなかった。&lt;/p&gt;
+
+&lt;p&gt;これは一体どういうことかとAuraのドキュメントを見ると、&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://documentation.auraframework.org/auradocs#reference?topic=api:Aura&#34;&gt;http://documentation.auraframework.org/auradocs#reference?topic=api:Aura&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;のlogメソッド(メソッドにリンクできないの不便すぎる)に&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This method doesn&amp;rsquo;t log in PROD or PRODDEBUG modes.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;とあった。&lt;/p&gt;
+
+&lt;p&gt;Lightningコンポーネントでのモードを調べると、&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://developer.salesforce.com/docs/atlas.ja-jp.lightning.meta/lightning/aura_debug_mode.htm&#34;&gt;https://developer.salesforce.com/docs/atlas.ja-jp.lightning.meta/lightning/aura_debug_mode.htm&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;デフォルトでは、Lightning コンポーネントフレームワークは PROD モードで実行されます。&lt;/p&gt;
+
+&lt;p&gt;デバッグモードを有効化すると、フレームワークはデフォルトで PRODDEBUG モードで実行されます。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;ということで、つまりLightningだとこの関数意味がない。&lt;/p&gt;
+
+&lt;p&gt;ただ「デフォルトで」というのが気になっててきとーに検索したら以下のページが見つかった。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.salesforce.com/us/developer/docs/lightning/Content/request_server_side.htm&#34;&gt;http://www.salesforce.com/us/developer/docs/lightning/Content/request_server_side.htm&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;どうやら aura の方では aura.mode パラメータでモードを指定できるらしい。&lt;/p&gt;
+
+&lt;p&gt;また、どんなモードが存在するかも見つけた。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.salesforce.com/us/developer/docs/lightning/Content/modes_reference.htm&#34;&gt;http://www.salesforce.com/us/developer/docs/lightning/Content/modes_reference.htm&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;実行モードには以下があるらしい。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;PROD&lt;/li&gt;
+&lt;li&gt;DEV&lt;/li&gt;
+&lt;li&gt;PRODDEBUG&lt;/li&gt;
+&lt;li&gt;JSTEST&lt;/li&gt;
+&lt;li&gt;JSTESTDEBUG&lt;/li&gt;
+&lt;li&gt;AUTOJSTEST&lt;/li&gt;
+&lt;li&gt;AUTOJSTESTDEBUG&lt;/li&gt;
+&lt;li&gt;PTEST&lt;/li&gt;
+&lt;li&gt;CADENCE&lt;/li&gt;
+&lt;li&gt;SELENIUM&lt;/li&gt;
+&lt;li&gt;SELENIUMDEBUG&lt;/li&gt;
+&lt;li&gt;UTEST&lt;/li&gt;
+&lt;li&gt;FTEST&lt;/li&gt;
+&lt;li&gt;STATS&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;さっそくパラメータとして aura.mode=MODE_NAME の形式で各モードを指定してみたがそれでもログは出力されなかったし、
+JSTESTとJSTESTDEBUGにいたっては内部サーバーエラーになった。&lt;/p&gt;
+
+&lt;p&gt;そもそもPRODDEBUG以外のモードはDEBUG付きでもJSが圧縮されていたので大体のモードはPRODと同じになってる気がする。&lt;/p&gt;
+
+&lt;p&gt;あとAuraのドキュメントでも関数の説明が&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Logs to the browser&amp;rsquo;s JavaScript console if it is available.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;としかないので、jsのコンソールに出力するだけならばそもそもこの関数の存在する理由が分からない。&lt;/p&gt;
+
+&lt;p&gt;最終的にはモードを切り替えが可能になると共に出力有無を切り替えできるようになるんだろうか。&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

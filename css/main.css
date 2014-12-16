@@ -83,3 +83,16 @@ pre {
     background-color: transparent !important;
     border: none;
 }
+
+blockquote {
+    /*0C1606*/
+    /*background-color: #0C0C0C;*/
+    background-color: #23241f;
+    /*color: #f8f8f2;*/
+    color: #c8c8c2;
+}
+
+.well table th {
+    padding: 5px !important;
+    border: 1px solid #000 !important;
+}
