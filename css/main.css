@@ -69,10 +69,14 @@ a {
     border-color: transparent;
 }
 
+.post-title {
+    font-size: 150%;
+    display: inline-block;
+}
+
 .post-title, .post-title > a {
     color: #d8f000;
     font-weight: bold;
-    display: inline-block;
 }
 
 hr {
