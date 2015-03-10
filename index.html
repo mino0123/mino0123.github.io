@@ -51,6 +51,23 @@
     
         <div class="well well-sm">
     <h2 class="post-title">
+        <a href="http://mino0123.github.io/2015/03/10/ForceCLI&#43;peco">Force.com CLI &#43; peco</a>
+    </h2>
+    <small class="pull-right">2015/03/10 23:00:25</small>
+    <hr>
+    <p><p>ふと思い立ってやってみた。</p>
+
+<pre><code class="language-sh">force query &quot;select Id, Name from Contact where AccountId='$(force query select Id, Name from Account | peco | cut -c 2-19)'&quot;
+</code></pre>
+
+<p>pecoで選択した取引先データを親にもつ取引先責任者を表示する。</p>
+
+<p>もっといい使い道はないだろうか。</p>
+</p>
+</div>
+    
+        <div class="well well-sm">
+    <h2 class="post-title">
         <a href="http://mino0123.github.io/2014/12/17/Lightning%E9%96%8B%E7%99%BA%E8%80%85%E3%82%AC%E3%82%A4%E3%83%89%E3%81%A7%E7%B4%B9%E4%BB%8B%E3%81%95%E3%82%8C%E3%81%A6%E3%82%8B%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B%E9%96%A2%E6%95%B0">Lightning開発者ガイドで紹介されてるログ出力関数</a>
     </h2>
     <small class="pull-right">2014/12/17 00:26:51</small>

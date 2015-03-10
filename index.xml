@@ -6,7 +6,24 @@
     <language>en-US</language>
     <author>Enthusiastic Hugo User</author>
     <rights>Copyright (c) 2014, Enthusiastic Hugo User; all rights reserved.</rights>
-    <updated>Wed, 17 Dec 2014 00:26:51 JST</updated>
+    <updated>Tue, 10 Mar 2015 23:00:25 JST</updated>
+    
+    <item>
+      <title>Force.com CLI &#43; peco</title>
+      <link>http://mino0123.github.io/2015/03/10/ForceCLI&#43;peco</link>
+      <pubDate>Tue, 10 Mar 2015 23:00:25 JST</pubDate>
+      <author>Enthusiastic Hugo User</author>
+      <guid>http://mino0123.github.io/2015/03/10/ForceCLI&#43;peco</guid>
+      <description>&lt;p&gt;ふと思い立ってやってみた。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;force query &amp;quot;select Id, Name from Contact where AccountId=&#39;$(force query select Id, Name from Account | peco | cut -c 2-19)&#39;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;pecoで選択した取引先データを親にもつ取引先責任者を表示する。&lt;/p&gt;
+
+&lt;p&gt;もっといい使い道はないだろうか。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Lightning開発者ガイドで紹介されてるログ出力関数</title>

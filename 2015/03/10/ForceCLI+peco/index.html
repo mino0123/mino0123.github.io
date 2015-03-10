@@ -9,8 +9,8 @@
     <meta name="author" content="mino0123">
 
 
-    <title>Posts - mino0123.github.io</title>
-    <link rel="canonical" href="http://mino0123.github.io/5c5c5cpost5cindex5cindex.html/">
+    <title>Force.com CLI &#43; peco - mino0123.github.io</title>
+    <link rel="canonical" href="http://mino0123.github.io/2015/03/10/ForceCLI&#43;peco">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap-theme.min.css">
@@ -22,7 +22,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-    <link href="http://mino0123.github.io/postindex.xml" rel="alternate" type="application/rss+xml" title="mino0123.github.io" />
+    
 </head>
 
 <body>
@@ -47,36 +47,27 @@
     </div>
   </div>
 </nav>
-<div class="container body">
+<div class="container">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-12">
             <div class="well well-sm">
-                <strong>Blog Post Archive</strong>
-                <ul class="list-unstyled">
+                    <h2 class="post-title">Force.com CLI &#43; peco</h2>
                     
-                            <li>
-        <h5><a href="http://mino0123.github.io/2015/03/10/ForceCLI&#43;peco">Force.com CLI &#43; peco</a><br>
-        <small>posted on March 10, 2015</small></h5>
-    </li>
-                    
-                            <li>
-        <h5><a href="http://mino0123.github.io/2014/12/17/Lightning%E9%96%8B%E7%99%BA%E8%80%85%E3%82%AC%E3%82%A4%E3%83%89%E3%81%A7%E7%B4%B9%E4%BB%8B%E3%81%95%E3%82%8C%E3%81%A6%E3%82%8B%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B%E9%96%A2%E6%95%B0">Lightning開発者ガイドで紹介されてるログ出力関数</a><br>
-        <small>posted on December 17, 2014</small></h5>
-    </li>
-                    
-                            <li>
-        <h5><a href="http://mino0123.github.io/2014/12/14/LightningAppBuilder">Lightning App Builder</a><br>
-        <small>posted on December 14, 2014</small></h5>
-    </li>
-                    
-                            <li>
-        <h5><a href="http://mino0123.github.io/2014/12/07/%E6%96%B0%E3%83%96%E3%83%AD%E3%82%B0">ブログを新しくした</a><br>
-        <small>posted on December 7, 2014</small></h5>
-    </li>
-                    
-                </ul>
+                    <small class="pull-right">2015/03/10 23:00:25</small>
+                    <hr>
+                    <p>ふと思い立ってやってみた。</p>
+
+<pre><code class="language-sh">force query &quot;select Id, Name from Contact where AccountId='$(force query select Id, Name from Account | peco | cut -c 2-19)'&quot;
+</code></pre>
+
+<p>pecoで選択した取引先データを親にもつ取引先責任者を表示する。</p>
+
+<p>もっといい使い道はないだろうか。</p>
+
             </div>
         </div>
+
+
     </div>
         <footer>
             <div class="row">
