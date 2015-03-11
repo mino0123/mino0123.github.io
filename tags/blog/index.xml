@@ -69,11 +69,12 @@
 
 &lt;p&gt;静的ファイルの追加が何故か1フォルダしか行われていなかった。
 chtimeで権限エラーになっていた。
-hugo.go で NewSyncer 後に
-&lt;code&gt;go
-syncer.NoTimes = true
-&lt;/code&gt;
-を追加することで最終更新日の同期をやめさせて対応した。&lt;/p&gt;
+hugo.go で NewSyncer 後に&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;syncer.NoTimes = true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;を追加することで最終更新日の同期をやめさせて対応した。&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-patch&#34;&gt;diff --git a/commands/hugo.go b/commands/hugo.go
 index 6fd7fa2..21dad47 100644

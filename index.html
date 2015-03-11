@@ -51,6 +51,33 @@
     
         <div class="well well-sm">
     <h2 class="post-title">
+        <a href="http://mino0123.github.io/2015/03/11/Lightning%E3%81%AFJS%E3%81%A7%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%92%E6%8F%A1%E3%82%8A%E3%81%A4%E3%81%B6%E3%81%99">LightningはJSで発生したエラーを握りつぶす</a>
+    </h2>
+    <small class="pull-right">2015/03/11 12:10:00</small>
+    <hr>
+    <p>
+
+<h3 id="lightningフレームワークは発生したエラーを握り潰す:f95fd108f447188bf548c57770569b32">Lightningフレームワークは発生したエラーを握り潰す</h3>
+
+<p>理由は<a href="/2014/12/17/Lightning%E9%96%8B%E7%99%BA%E8%80%85%E3%82%AC%E3%82%A4%E3%83%89%E3%81%A7%E7%B4%B9%E4%BB%8B%E3%81%95%E3%82%8C%E3%81%A6%E3%82%8B%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B%E9%96%A2%E6%95%B0/">Lightning開発者ガイドで紹介されてるログ出力関数</a>で書いたのと同じ。</p>
+
+<p>JSコントローラ内でエラーが発生すると $A.$warning$ にエラーが渡されるが</p>
+
+<p>$A.$warning$ が $A.$logInternal$ を呼び出しているので PROD,PRODDEBUG モードだとなにも出力されない。</p>
+
+<p>開発中にエラーを握りつぶされるためとても不便。</p>
+
+<p>一応下記のJSで $A.$warning$ を上書きすれば見えるようになる。</p>
+
+<pre><code class="language-js">$A.$warning$ = function (msg, err) {
+	console.warn(msg, err);
+};
+</code></pre>
+</p>
+</div>
+    
+        <div class="well well-sm">
+    <h2 class="post-title">
         <a href="http://mino0123.github.io/2015/03/10/ForceCLI&#43;peco">Force.com CLI &#43; peco</a>
     </h2>
     <small class="pull-right">2015/03/10 23:00:25</small>
@@ -366,11 +393,12 @@ JSTESTとJSTESTDEBUGにいたっては内部サーバーエラーになった。
 
 <p>静的ファイルの追加が何故か1フォルダしか行われていなかった。
 chtimeで権限エラーになっていた。
-hugo.go で NewSyncer 後に
-<code>go
-syncer.NoTimes = true
-</code>
-を追加することで最終更新日の同期をやめさせて対応した。</p>
+hugo.go で NewSyncer 後に</p>
+
+<pre><code class="language-go">syncer.NoTimes = true
+</code></pre>
+
+<p>を追加することで最終更新日の同期をやめさせて対応した。</p>
 
 <pre><code class="language-patch">diff --git a/commands/hugo.go b/commands/hugo.go
 index 6fd7fa2..21dad47 100644

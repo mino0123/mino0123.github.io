@@ -6,7 +6,34 @@
     <language>en-US</language>
     <author>Enthusiastic Hugo User</author>
     <rights>Copyright (c) 2014, Enthusiastic Hugo User; all rights reserved.</rights>
-    <updated>Tue, 10 Mar 2015 23:00:25 JST</updated>
+    <updated>Wed, 11 Mar 2015 12:10:00 JST</updated>
+    
+    <item>
+      <title>LightningはJSで発生したエラーを握りつぶす</title>
+      <link>http://mino0123.github.io/2015/03/11/Lightning%E3%81%AFJS%E3%81%A7%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%92%E6%8F%A1%E3%82%8A%E3%81%A4%E3%81%B6%E3%81%99</link>
+      <pubDate>Wed, 11 Mar 2015 12:10:00 JST</pubDate>
+      <author>Enthusiastic Hugo User</author>
+      <guid>http://mino0123.github.io/2015/03/11/Lightning%E3%81%AFJS%E3%81%A7%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%92%E6%8F%A1%E3%82%8A%E3%81%A4%E3%81%B6%E3%81%99</guid>
+      <description>
+
+&lt;h3 id=&#34;lightningフレームワークは発生したエラーを握り潰す:f95fd108f447188bf548c57770569b32&#34;&gt;Lightningフレームワークは発生したエラーを握り潰す&lt;/h3&gt;
+
+&lt;p&gt;理由は&lt;a href=&#34;/2014/12/17/Lightning%E9%96%8B%E7%99%BA%E8%80%85%E3%82%AC%E3%82%A4%E3%83%89%E3%81%A7%E7%B4%B9%E4%BB%8B%E3%81%95%E3%82%8C%E3%81%A6%E3%82%8B%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B%E9%96%A2%E6%95%B0/&#34;&gt;Lightning開発者ガイドで紹介されてるログ出力関数&lt;/a&gt;で書いたのと同じ。&lt;/p&gt;
+
+&lt;p&gt;JSコントローラ内でエラーが発生すると $A.$warning$ にエラーが渡されるが&lt;/p&gt;
+
+&lt;p&gt;$A.$warning$ が $A.$logInternal$ を呼び出しているので PROD,PRODDEBUG モードだとなにも出力されない。&lt;/p&gt;
+
+&lt;p&gt;開発中にエラーを握りつぶされるためとても不便。&lt;/p&gt;
+
+&lt;p&gt;一応下記のJSで $A.$warning$ を上書きすれば見えるようになる。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;$A.$warning$ = function (msg, err) {
+	console.warn(msg, err);
+};
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>Force.com CLI &#43; peco</title>
@@ -325,11 +352,12 @@ JSTESTとJSTESTDEBUGにいたっては内部サーバーエラーになった。
 
 &lt;p&gt;静的ファイルの追加が何故か1フォルダしか行われていなかった。
 chtimeで権限エラーになっていた。
-hugo.go で NewSyncer 後に
-&lt;code&gt;go
-syncer.NoTimes = true
-&lt;/code&gt;
-を追加することで最終更新日の同期をやめさせて対応した。&lt;/p&gt;
+hugo.go で NewSyncer 後に&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;syncer.NoTimes = true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;を追加することで最終更新日の同期をやめさせて対応した。&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-patch&#34;&gt;diff --git a/commands/hugo.go b/commands/hugo.go
 index 6fd7fa2..21dad47 100644
