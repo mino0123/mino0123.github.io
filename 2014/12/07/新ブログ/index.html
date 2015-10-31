@@ -10,7 +10,7 @@
 
 
     <title>ブログを新しくした - mino0123.github.io</title>
-    <link rel="canonical" href="http://mino0123.github.io/2014/12/07/%E6%96%B0%E3%83%96%E3%83%AD%E3%82%B0">
+    <link rel="canonical" href="http://mino0123.github.io/2014/12/07/%E6%96%B0%E3%83%95%E3%82%99%E3%83%AD%E3%82%AF%E3%82%99/">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap-theme.min.css">
@@ -92,13 +92,12 @@
 </ul>
 
 <p>あとコードのハイライトは pygments 使おうと思ったけどなぜかpタグがcode内にでてくる
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #f92672">&lt;</span><span style="color: #a6e22e">p</span><span style="color: #f92672">&gt;</span><span style="color: #66d9ef">function</span> <span style="color: #a6e22e">func</span><span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{</span>
-    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">v</span><span style="color: #f8f8f2">;</span>
-    <span style="color: #a6e22e">v</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">;</span>
-    <span style="color: #a6e22e">v</span> <span style="color: #f92672">=</span> <span style="color: #960050; background-color: #1e0010">‘</span><span style="color: #a6e22e">string</span><span style="color: #960050; background-color: #1e0010">’</span><span style="color: #f8f8f2">;</span>
-    <span style="color: #a6e22e">v</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">function</span> <span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{};</span>
-<span style="color: #f8f8f2">}</span><span style="color: #f92672">&lt;</span><span style="color: #960050; background-color: #1e0010">/p&gt;</span>
-</pre></div>
+<p>function func() {
+    var v;
+    v = 0;
+    v = ‘string’;
+    v = function () {};
+}</p>
 
 ので Hilight.js の monokai sublime テーマにした。</p>
 
@@ -110,7 +109,7 @@
 }
 </code></pre>
 
-<h3 id="追記:d53c10dd05a7c61b37271a603513f0e7">追記</h3>
+<h3 id="追記:04be4ca2e04ad3019e50890afab58a4b">追記</h3>
 
 <p>静的ファイルの追加が何故か1フォルダしか行われていなかった。
 chtimeで権限エラーになっていた。

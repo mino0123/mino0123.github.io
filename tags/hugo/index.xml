@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
       <title>Hugo on mino0123.github.io </title>
-    <link>http://mino0123.github.io/5ctags5chugo5cindex.html/</link>
+    <link>http://mino0123.github.io/tags/hugo/</link>
     <language>en-US</language>
     <author>Enthusiastic Hugo User</author>
     <rights>Copyright (c) 2014, Enthusiastic Hugo User; all rights reserved.</rights>
@@ -10,10 +10,10 @@
     
     <item>
       <title>ブログを新しくした</title>
-      <link>http://mino0123.github.io/2014/12/07/%E6%96%B0%E3%83%96%E3%83%AD%E3%82%B0</link>
+      <link>http://mino0123.github.io/2014/12/07/%E6%96%B0%E3%83%95%E3%82%99%E3%83%AD%E3%82%AF%E3%82%99/</link>
       <pubDate>Sun, 07 Dec 2014 04:00:00 JST</pubDate>
       <author>Enthusiastic Hugo User</author>
-      <guid>http://mino0123.github.io/2014/12/07/%E6%96%B0%E3%83%96%E3%83%AD%E3%82%B0</guid>
+      <guid>http://mino0123.github.io/2014/12/07/%E6%96%B0%E3%83%95%E3%82%99%E3%83%AD%E3%82%AF%E3%82%99/</guid>
       <description>
 
 &lt;p&gt;golang製の静的サイトジェネレータである &lt;a href=&#34;http://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; を使った。&lt;/p&gt;
@@ -47,13 +47,12 @@
 &lt;/ul&gt;
 
 &lt;p&gt;あとコードのハイライトは pygments 使おうと思ったけどなぜかpタグがcode内にでてくる
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;func&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;v&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color: #a6e22e&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color: #a6e22e&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;‘&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;’&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color: #a6e22e&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;{};&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;/p&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;function func() {
+    var v;
+    v = 0;
+    v = ‘string’;
+    v = function () {};
+}&lt;/p&gt;
 
 ので Hilight.js の monokai sublime テーマにした。&lt;/p&gt;
 
@@ -65,7 +64,7 @@
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;追記:d53c10dd05a7c61b37271a603513f0e7&#34;&gt;追記&lt;/h3&gt;
+&lt;h3 id=&#34;追記:04be4ca2e04ad3019e50890afab58a4b&#34;&gt;追記&lt;/h3&gt;
 
 &lt;p&gt;静的ファイルの追加が何故か1フォルダしか行われていなかった。
 chtimeで権限エラーになっていた。

@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
       <title>Salesforce on mino0123.github.io </title>
-    <link>http://mino0123.github.io/5ctags5csalesforce5cindex.html/</link>
+    <link>http://mino0123.github.io/tags/salesforce/</link>
     <language>en-US</language>
     <author>Enthusiastic Hugo User</author>
     <rights>Copyright (c) 2014, Enthusiastic Hugo User; all rights reserved.</rights>
@@ -10,11 +10,11 @@
     
     <item>
       <title>LightningはJSで発生したエラーを握りつぶす</title>
-      <link>http://mino0123.github.io/2015/03/11/Lightning%E3%81%AFJS%E3%81%A7%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%92%E6%8F%A1%E3%82%8A%E3%81%A4%E3%81%B6%E3%81%99</link>
+      <link>http://mino0123.github.io/2015/03/11/Lightning%E3%81%AFJS%E3%81%A6%E3%82%99%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%92%E6%8F%A1%E3%82%8A%E3%81%A4%E3%81%B5%E3%82%99%E3%81%99/</link>
       <pubDate>Wed, 11 Mar 2015 12:10:00 JST</pubDate>
       <author>Enthusiastic Hugo User</author>
-      <guid>http://mino0123.github.io/2015/03/11/Lightning%E3%81%AFJS%E3%81%A7%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%92%E6%8F%A1%E3%82%8A%E3%81%A4%E3%81%B6%E3%81%99</guid>
-      <description>&lt;p&gt;理由は&lt;a href=&#34;/2014/12/17/Lightning%E9%96%8B%E7%99%BA%E8%80%85%E3%82%AC%E3%82%A4%E3%83%89%E3%81%A7%E7%B4%B9%E4%BB%8B%E3%81%95%E3%82%8C%E3%81%A6%E3%82%8B%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B%E9%96%A2%E6%95%B0/&#34;&gt;Lightning開発者ガイドで紹介されてるログ出力関数&lt;/a&gt;で書いたのと同じ。&lt;/p&gt;
+      <guid>http://mino0123.github.io/2015/03/11/Lightning%E3%81%AFJS%E3%81%A6%E3%82%99%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%92%E6%8F%A1%E3%82%8A%E3%81%A4%E3%81%B5%E3%82%99%E3%81%99/</guid>
+      <description>&lt;p&gt;理由は&lt;a href=&#34;http://mino0123.github.io/2014/12/17/Lightning%E9%96%8B%E7%99%BA%E8%80%85%E3%82%AC%E3%82%A4%E3%83%89%E3%81%A7%E7%B4%B9%E4%BB%8B%E3%81%95%E3%82%8C%E3%81%A6%E3%82%8B%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B%E9%96%A2%E6%95%B0/&#34;&gt;Lightning開発者ガイドで紹介されてるログ出力関数&lt;/a&gt;で書いたのと同じ。&lt;/p&gt;
 
 &lt;p&gt;JSコントローラ内でエラーが発生すると $A.$warning$ にエラーが渡されるが&lt;/p&gt;
 
@@ -33,10 +33,10 @@
     
     <item>
       <title>Lightning App Builder</title>
-      <link>http://mino0123.github.io/2014/12/14/LightningAppBuilder</link>
+      <link>http://mino0123.github.io/2014/12/14/LightningAppBuilder/</link>
       <pubDate>Sun, 14 Dec 2014 06:00:00 JST</pubDate>
       <author>Enthusiastic Hugo User</author>
-      <guid>http://mino0123.github.io/2014/12/14/LightningAppBuilder</guid>
+      <guid>http://mino0123.github.io/2014/12/14/LightningAppBuilder/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;http://qiita.com/advent-calendar/2014/salesforce1&#34;&gt;Salesforce1 Advent Calendar&lt;/a&gt;
@@ -56,8 +56,8 @@
 
 &lt;p&gt;まずは App Builder に入る前のビューですが、&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;/img/2014/12/14/FlexiPageList.png&#34; target=&#34;_blank&#34;&gt;
-    &lt;img src=&#34;/img/2014/12/14/FlexiPageList.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;http://mino0123.github.io/img/2014/12/14/FlexiPageList.png&#34; target=&#34;_blank&#34;&gt;
+    &lt;img src=&#34;http://mino0123.github.io/img/2014/12/14/FlexiPageList.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
 &lt;/a&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;ビジュアルアプリケーションビルダーには、Flexible Pagesを使用してSalesforce1 のカスタムアプリケーションページを作成するための使いやすいグラフィカルインターフェースが用意されています。
@@ -69,8 +69,8 @@
 
 &lt;!-- ビューのURLは https://ap1.salesforce.com/_ui/flexipage/ui/FlexiPageListUi/d --&gt;
 
-&lt;p&gt;&lt;a href=&#34;/img/2014/12/14/LightningAppBuilder01.png&#34; target=&#34;_blank&#34;&gt;
-    &lt;img src=&#34;/img/2014/12/14/LightningAppBuilder01.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;http://mino0123.github.io/img/2014/12/14/LightningAppBuilder01.png&#34; target=&#34;_blank&#34;&gt;
+    &lt;img src=&#34;http://mino0123.github.io/img/2014/12/14/LightningAppBuilder01.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
 &lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;新規ボタンを押した後に立ち上がる App Builder の画面です。&lt;/p&gt;
@@ -87,24 +87,24 @@
 &lt;li&gt;テンプレートA(1領域)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;a href=&#34;/img/2014/12/14/LightningAppBuilder02.png&#34; target=&#34;_blank&#34;&gt;
-    &lt;img src=&#34;/img/2014/12/14/LightningAppBuilder02.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;http://mino0123.github.io/img/2014/12/14/LightningAppBuilder02.png&#34; target=&#34;_blank&#34;&gt;
+    &lt;img src=&#34;http://mino0123.github.io/img/2014/12/14/LightningAppBuilder02.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
 &lt;/a&gt;&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;テンプレートB(2領域)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;a href=&#34;/img/2014/12/14/LightningAppBuilder03.png&#34; target=&#34;_blank&#34;&gt;
-    &lt;img src=&#34;/img/2014/12/14/LightningAppBuilder03.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;http://mino0123.github.io/img/2014/12/14/LightningAppBuilder03.png&#34; target=&#34;_blank&#34;&gt;
+    &lt;img src=&#34;http://mino0123.github.io/img/2014/12/14/LightningAppBuilder03.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
 &lt;/a&gt;&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;テンプレートC(3領域)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;a href=&#34;/img/2014/12/14/LightningAppBuilder04.png&#34; target=&#34;_blank&#34;&gt;
-    &lt;img src=&#34;/img/2014/12/14/LightningAppBuilder04.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;http://mino0123.github.io/img/2014/12/14/LightningAppBuilder04.png&#34; target=&#34;_blank&#34;&gt;
+    &lt;img src=&#34;http://mino0123.github.io/img/2014/12/14/LightningAppBuilder04.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
 &lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;まとめると、最大3つのエリアをもつページを作成することができ、&lt;/p&gt;
@@ -116,8 +116,8 @@
 
 &lt;p&gt;テンプレートを選択すると最後にページの名前を設定してドラッグ&amp;amp;ドロップによるページ作成が始まります。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;/img/2014/12/14/LightningAppBuilder05.png&#34; target=&#34;_blank&#34;&gt;
-    &lt;img src=&#34;/img/2014/12/14/LightningAppBuilder05.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;http://mino0123.github.io/img/2014/12/14/LightningAppBuilder05.png&#34; target=&#34;_blank&#34;&gt;
+    &lt;img src=&#34;http://mino0123.github.io/img/2014/12/14/LightningAppBuilder05.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
 &lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;[標準コンポーネント], [カスタムコンポーネント] の下に [AppExchangeコンポーネント] が並んでいるのが分かります。&lt;/p&gt;
@@ -128,18 +128,18 @@
 
 &lt;p&gt;ページの設定の一番下に[処理]とありますが、Lightning Process Builderで作成した処理を割り当てたりできるのでしょうか。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;/img/2014/12/14/LightningAppBuilder06.png&#34; target=&#34;_blank&#34;&gt;
-    &lt;img src=&#34;/img/2014/12/14/LightningAppBuilder06.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;http://mino0123.github.io/img/2014/12/14/LightningAppBuilder06.png&#34; target=&#34;_blank&#34;&gt;
+    &lt;img src=&#34;http://mino0123.github.io/img/2014/12/14/LightningAppBuilder06.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
 &lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;/img/2014/12/14/LightningAppBuilder09.png&#34; target=&#34;_blank&#34;&gt;
-    &lt;img src=&#34;/img/2014/12/14/LightningAppBuilder09.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;http://mino0123.github.io/img/2014/12/14/LightningAppBuilder09.png&#34; target=&#34;_blank&#34;&gt;
+    &lt;img src=&#34;http://mino0123.github.io/img/2014/12/14/LightningAppBuilder09.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
 &lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;プレビューの端末を変更することもできます。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;/img/2014/12/14/LightningAppBuilder10.png&#34; target=&#34;_blank&#34;&gt;
-    &lt;img src=&#34;/img/2014/12/14/LightningAppBuilder10.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;http://mino0123.github.io/img/2014/12/14/LightningAppBuilder10.png&#34; target=&#34;_blank&#34;&gt;
+    &lt;img src=&#34;http://mino0123.github.io/img/2014/12/14/LightningAppBuilder10.png&#34; style=&#34;width:100%;max-width:800px;&#34;&gt;
 &lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;まとめ:efbb8997069fcf1a0878ff17f0598ba5&#34;&gt;まとめ&lt;/h3&gt;

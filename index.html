@@ -51,7 +51,28 @@
     
         <div class="well well-sm">
     <h2 class="post-title">
-        <a href="http://mino0123.github.io/2015/03/11/Lightning%E3%81%AFJS%E3%81%A7%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%92%E6%8F%A1%E3%82%8A%E3%81%A4%E3%81%B6%E3%81%99">LightningはJSで発生したエラーを握りつぶす</a>
+        <a href="http://mino0123.github.io/2015/10/31/Lightning%E3%82%B3%E3%83%B3%E3%83%9B%E3%82%9A%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88%E3%82%92%E7%9B%B4%E6%8E%A5%E9%96%8B%E3%81%8FURL/">Lightningコンポーネントを直接開くURL</a>
+    </h2>
+    <small class="pull-right">2015/10/31 23:48:39</small>
+    <hr>
+    <p><pre><code class="language-js">var componentName = 'MyComponent';
+var hash = btoa(JSON.stringify({
+  componentDef: &quot;one:auraContainer&quot;,
+  attributes: {
+    values: {
+      tag: &quot;c:&quot; + componentName,
+      t: Date.now()
+    }
+  }
+}));
+var url = &quot;/one/one.app#&quot; + hash;
+</code></pre>
+</p>
+</div>
+    
+        <div class="well well-sm">
+    <h2 class="post-title">
+        <a href="http://mino0123.github.io/2015/03/11/Lightning%E3%81%AFJS%E3%81%A6%E3%82%99%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%92%E6%8F%A1%E3%82%8A%E3%81%A4%E3%81%B5%E3%82%99%E3%81%99/">LightningはJSで発生したエラーを握りつぶす</a>
     </h2>
     <small class="pull-right">2015/03/11 12:10:00</small>
     <hr>
@@ -74,7 +95,7 @@
     
         <div class="well well-sm">
     <h2 class="post-title">
-        <a href="http://mino0123.github.io/2015/03/10/ForceCLI&#43;peco">Force.com CLI &#43; peco</a>
+        <a href="http://mino0123.github.io/2015/03/10/ForceCLI&#43;peco/">Force.com CLI &#43; peco</a>
     </h2>
     <small class="pull-right">2015/03/10 23:00:25</small>
     <hr>
@@ -91,7 +112,7 @@
     
         <div class="well well-sm">
     <h2 class="post-title">
-        <a href="http://mino0123.github.io/2014/12/17/Lightning%E9%96%8B%E7%99%BA%E8%80%85%E3%82%AC%E3%82%A4%E3%83%89%E3%81%A7%E7%B4%B9%E4%BB%8B%E3%81%95%E3%82%8C%E3%81%A6%E3%82%8B%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B%E9%96%A2%E6%95%B0">Lightning開発者ガイドで紹介されてるログ出力関数</a>
+        <a href="http://mino0123.github.io/2014/12/17/Lightning%E9%96%8B%E7%99%BA%E8%80%85%E3%82%AB%E3%82%99%E3%82%A4%E3%83%88%E3%82%99%E3%81%A6%E3%82%99%E7%B4%B9%E4%BB%8B%E3%81%95%E3%82%8C%E3%81%A6%E3%82%8B%E3%83%AD%E3%82%AF%E3%82%99%E5%87%BA%E5%8A%9B%E9%96%A2%E6%95%B0/">Lightning開発者ガイドで紹介されてるログ出力関数</a>
     </h2>
     <small class="pull-right">2014/12/17 00:26:51</small>
     <hr>
@@ -213,7 +234,7 @@ JSTESTとJSTESTDEBUGにいたっては内部サーバーエラーになった。
     
         <div class="well well-sm">
     <h2 class="post-title">
-        <a href="http://mino0123.github.io/2014/12/14/LightningAppBuilder">Lightning App Builder</a>
+        <a href="http://mino0123.github.io/2014/12/14/LightningAppBuilder/">Lightning App Builder</a>
     </h2>
     <small class="pull-right">2014/12/14 06:00:00</small>
     <hr>
@@ -330,7 +351,7 @@ JSTESTとJSTESTDEBUGにいたっては内部サーバーエラーになった。
     
         <div class="well well-sm">
     <h2 class="post-title">
-        <a href="http://mino0123.github.io/2014/12/07/%E6%96%B0%E3%83%96%E3%83%AD%E3%82%B0">ブログを新しくした</a>
+        <a href="http://mino0123.github.io/2014/12/07/%E6%96%B0%E3%83%95%E3%82%99%E3%83%AD%E3%82%AF%E3%82%99/">ブログを新しくした</a>
     </h2>
     <small class="pull-right">2014/12/07 04:00:00</small>
     <hr>
@@ -367,13 +388,12 @@ JSTESTとJSTESTDEBUGにいたっては内部サーバーエラーになった。
 </ul>
 
 <p>あとコードのハイライトは pygments 使おうと思ったけどなぜかpタグがcode内にでてくる
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #f92672">&lt;</span><span style="color: #a6e22e">p</span><span style="color: #f92672">&gt;</span><span style="color: #66d9ef">function</span> <span style="color: #a6e22e">func</span><span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{</span>
-    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">v</span><span style="color: #f8f8f2">;</span>
-    <span style="color: #a6e22e">v</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">;</span>
-    <span style="color: #a6e22e">v</span> <span style="color: #f92672">=</span> <span style="color: #960050; background-color: #1e0010">‘</span><span style="color: #a6e22e">string</span><span style="color: #960050; background-color: #1e0010">’</span><span style="color: #f8f8f2">;</span>
-    <span style="color: #a6e22e">v</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">function</span> <span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{};</span>
-<span style="color: #f8f8f2">}</span><span style="color: #f92672">&lt;</span><span style="color: #960050; background-color: #1e0010">/p&gt;</span>
-</pre></div>
+<p>function func() {
+    var v;
+    v = 0;
+    v = ‘string’;
+    v = function () {};
+}</p>
 
 ので Hilight.js の monokai sublime テーマにした。</p>
 
@@ -385,7 +405,7 @@ JSTESTとJSTESTDEBUGにいたっては内部サーバーエラーになった。
 }
 </code></pre>
 
-<h3 id="追記:d53c10dd05a7c61b37271a603513f0e7">追記</h3>
+<h3 id="追記:04be4ca2e04ad3019e50890afab58a4b">追記</h3>
 
 <p>静的ファイルの追加が何故か1フォルダしか行われていなかった。
 chtimeで権限エラーになっていた。
