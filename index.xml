@@ -6,14 +6,100 @@
     <language>en-US</language>
     <author>Enthusiastic Hugo User</author>
     <rights>Copyright (c) 2014, Enthusiastic Hugo User; all rights reserved.</rights>
-    <updated>Sat, 31 Oct 2015 23:48:39 JST</updated>
+    <updated>Tue, 19 Apr 2016 18:43:42 JST</updated>
+    
+    <item>
+      <title>LockerServiceについての所感</title>
+      <link>http://mino0123.github.io/2016/04/19/lockerservice/</link>
+      <pubDate>Tue, 19 Apr 2016 18:43:42 JST</pubDate>
+      <author>Enthusiastic Hugo User</author>
+      <guid>http://mino0123.github.io/2016/04/19/lockerservice/</guid>
+      <description>&lt;p&gt;先日、LightningComponent上でサードパーティ製のライブラリを利用可能にするための仕組みとして、
+LockerServiceがSalesforceのブログで発表された。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://developer.salesforce.com/blogs/developer-relations/2016/04/introducing-lockerservice-lightning-components.html&#34;&gt;Introducing The LockerService For Lightning Components - Developer Relations&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://blogjp.sforce.com/2016/04/lightning-locke-7551.html&#34;&gt;Lightning Locker Serviceのご紹介 | Salesforce Developers Japan Blog&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;リリースされていないけど、今回のブログをみたのとauraのソースを少しあさった事による所感。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;ja&#34;&gt;&lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;LockerServiceでReact/Angularが使えるようになると言ってるけど、aura側で検閲処理入れたラッパー(SecureVirtualDOM)を返してくるようになるとのことで、ほんとに使えるようになるんだろうかこれ？&lt;/p&gt;&amp;mdash; mino0123 (@mino0123) &lt;a href=&#34;https://twitter.com/mino0123/status/721892406640009216&#34;&gt;2016年4月18日&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;ja&#34;&gt;&lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;LockerServiceでReact/Angularが使えるようになると言ってるけど、aura側で検閲処理入れたラッパー(SecureVirtualDOM)を返してくるようになるとのことで、ほんとに使えるようになるんだろうかこれ？&lt;/p&gt;&amp;mdash; mino0123 (@mino0123) &lt;a href=&#34;https://twitter.com/mino0123/status/721892406640009216&#34;&gt;2016年4月18日&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;auraのソースで見つけたLockerServiceで使われそうな各オブジェクトのラッパー実装。&lt;/p&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;ja&#34;&gt;&lt;p lang=&#34;und&#34; dir=&#34;ltr&#34;&gt;&lt;a href=&#34;https://github.com/forcedotcom/aura/tree/master/aura-impl/src/main/resources/aura/locker&#34;&gt;https://github.com/forcedotcom/aura/tree/master/aura-impl/src/main/resources/aura/locker&lt;/a&gt;&lt;/p&gt;&amp;mdash; mino0123 (@mino0123) &lt;a href=&#34;https://twitter.com/mino0123/status/721892693421330436&#34;&gt;2016年4月18日&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;ja&#34;&gt;&lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;Elementのプロパティにもホワイトリストが&lt;a href=&#34;https://github.com/forcedotcom/aura/blob/a76e1c04eb7be858323161bc5e9098b3706ca56c/aura-impl/src/main/resources/aura/locker/SecureElement.js#L162&#34;&gt;https://github.com/forcedotcom/aura/blob/a76e1c04eb7be858323161bc5e9098b3706ca56c/aura-impl/src/main/resources/aura/locker/SecureElement.js#L162&lt;/a&gt;&lt;/p&gt;&amp;mdash; mino0123 (@mino0123) &lt;a href=&#34;https://twitter.com/mino0123/status/721892926322651139&#34;&gt;2016年4月18日&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;ja&#34;&gt;&lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;LockerService、生のオブジェクトを触る抜け道いくらでもありそうなんだけど、作ってる側はラッパーオブジェクトだけを使えるように制限することが可能でそれで安全確保できるとか考えてそうな気がちょっと&lt;/p&gt;&amp;mdash; mino0123 (@mino0123) &lt;a href=&#34;https://twitter.com/mino0123/status/722041257824923648&#34;&gt;2016年4月18日&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;ja&#34;&gt;&lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;そもそもwindow上掛けないしそれはないか&lt;/p&gt;&amp;mdash; mino0123 (@mino0123) &lt;a href=&#34;https://twitter.com/mino0123/status/722041848093487104&#34;&gt;2016年4月18日&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;Functionに文字列を渡すとコードとして実行できるが、その時にthisがグローバルオブジェクトになる。&lt;/p&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;ja&#34;&gt;&lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;ここにFunction(&amp;#39;return this&amp;#39;)()があるじゃろ？&lt;/p&gt;&amp;mdash; mino0123 (@mino0123) &lt;a href=&#34;https://twitter.com/mino0123/status/722063889593081856&#34;&gt;2016年4月18日&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;JavaScriptではconsttuctorプロパティでオブジェクトのコンストラクタにアクセスできる。&lt;/p&gt;
+
+&lt;p&gt;コンストラクタは関数なのでFunctionのインスタンス。&lt;/p&gt;
+
+&lt;p&gt;つまり、あらゆるオブジェクトから.constructor.constructorでFunctionを取得できる。&lt;/p&gt;
+
+&lt;p&gt;単にアクセスするオブジェクトの名前でホワイトリスト作っても無駄。
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;ja&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;c=&amp;#39;constructor&amp;#39;,(1)[c]&lt;a href=&#34;&amp;amp;#39;return this&amp;amp;#39;&#34;&gt;c&lt;/a&gt;();&lt;/p&gt;&amp;mdash; mino0123 (@mino0123) &lt;a href=&#34;https://twitter.com/mino0123/status/722217476906311680&#34;&gt;2016年4月19日&lt;/a&gt;&lt;/blockquote&gt;&lt;/p&gt;
+
+&lt;p&gt;あと根本的な問題として、ブラウザ側は多分そんな用途を想定してない。&lt;/p&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;ja&#34;&gt;&lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;ブラウザ的にページ内の領域ごとにセキュリティ担保する方法を提供する方向性なんてないだろうし、仮に今raw windowへのアクセスを妨害可能だったとしても将来もそうである保証なんてないだろう&lt;/p&gt;&amp;mdash; mino0123 (@mino0123) &lt;a href=&#34;https://twitter.com/mino0123/status/722230688187977728&#34;&gt;2016年4月19日&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;ja&#34;&gt;&lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;彼らの言うセキュリティは多分コンポーネント実装者に悪意があっても別のパッケージのコンポーネントが持つ情報にアクセスさせたくないとかいうレベルなんだろうけど実際に提供されるものは本当に悪意があったら簡単に回避できる上に通常の開発者への負担は膨大というシロモノになりそう&lt;/p&gt;&amp;mdash; mino0123 (@mino0123) &lt;a href=&#34;https://twitter.com/mino0123/status/722232606859796480&#34;&gt;2016年4月19日&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;ja&#34;&gt;&lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;でもそれが可能なのかイマイチわからない&lt;/p&gt;&amp;mdash; mino0123 (@mino0123) &lt;a href=&#34;https://twitter.com/mino0123/status/722241824186695680&#34;&gt;2016年4月19日&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;試してみたら&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;with({window:{}, document:{}}){
+  //...
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;の中に外部のコードを埋め込むことで一応挿げ替えはできそう。&lt;/p&gt;
+
+&lt;p&gt;と思って探したらそれっぽいことやってる部分あった。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/forcedotcom/aura/blob/97735919d583080a81b4d0a5734f84559a0f121c/aura-resources/src/main/resources/aura/resources/lockerservice/safeEval.html#L35&#34;&gt;https://github.com/forcedotcom/aura/blob/97735919d583080a81b4d0a5734f84559a0f121c/aura-resources/src/main/resources/aura/resources/lockerservice/safeEval.html#L35&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;上記のURLを返す ConfigAdapterImpl#getLockerWorkerURL() メソッド&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/forcedotcom/aura/blob/97735919d583080a81b4d0a5734f84559a0f121c/aura-impl/src/main/java/org/auraframework/impl/adapter/ConfigAdapterImpl.java#L455&#34;&gt;https://github.com/forcedotcom/aura/blob/97735919d583080a81b4d0a5734f84559a0f121c/aura-impl/src/main/java/org/auraframework/impl/adapter/ConfigAdapterImpl.java#L455&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;このメソッドが返す値は以下のファイルでauraInitというMapにsafeEvalWorkerというキーで追加されている。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;aura-impl/src/main/java/org/auraframework/impl/adapter/format/html/BaseComponentDefHTMLFormatAdapter.java&lt;/li&gt;
+&lt;li&gt;aura-impl/src/main/java/org/auraframework/impl/adapter/format/html/BaseComponentHTMLFormatAdapter.java&lt;/li&gt;
+&lt;li&gt;aura/src/main/java/org/auraframework/http/resource/TemplateResource.java&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;auraInit.put(&amp;quot;safeEvalWorker&amp;quot;, Aura.getConfigAdapter().getLockerWorkerURL());
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;たぶんこのマップがJSに渡るのだろう。safeEvalWorkerというキーがJSで使用されている。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/forcedotcom/aura/blob/97735919d583080a81b4d0a5734f84559a0f121c/aura-impl/src/main/resources/aura/Aura.js#L645&#34;&gt;https://github.com/forcedotcom/aura/blob/97735919d583080a81b4d0a5734f84559a0f121c/aura-impl/src/main/resources/aura/Aura.js#L645&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Lightningコンポーネントを直接開くURL</title>
-      <link>http://mino0123.github.io/2015/10/31/Lightning%E3%82%B3%E3%83%B3%E3%83%9B%E3%82%9A%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88%E3%82%92%E7%9B%B4%E6%8E%A5%E9%96%8B%E3%81%8FURL/</link>
+      <link>http://mino0123.github.io/2015/10/31/lightning%E3%82%B3%E3%83%B3%E3%83%9B%E3%82%9A%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88%E3%82%92%E7%9B%B4%E6%8E%A5%E9%96%8B%E3%81%8Furl/</link>
       <pubDate>Sat, 31 Oct 2015 23:48:39 JST</pubDate>
       <author>Enthusiastic Hugo User</author>
-      <guid>http://mino0123.github.io/2015/10/31/Lightning%E3%82%B3%E3%83%B3%E3%83%9B%E3%82%9A%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88%E3%82%92%E7%9B%B4%E6%8E%A5%E9%96%8B%E3%81%8FURL/</guid>
+      <guid>http://mino0123.github.io/2015/10/31/lightning%E3%82%B3%E3%83%B3%E3%83%9B%E3%82%9A%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88%E3%82%92%E7%9B%B4%E6%8E%A5%E9%96%8B%E3%81%8Furl/</guid>
       <description>&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;var componentName = &#39;MyComponent&#39;;
 var hash = btoa(JSON.stringify({
   componentDef: &#39;one:auraContainer&#39;,
@@ -31,10 +117,10 @@ var url = &#39;/one/one.app#&#39; + hash;
     
     <item>
       <title>LightningはJSで発生したエラーを握りつぶす</title>
-      <link>http://mino0123.github.io/2015/03/11/Lightning%E3%81%AFJS%E3%81%A6%E3%82%99%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%92%E6%8F%A1%E3%82%8A%E3%81%A4%E3%81%B5%E3%82%99%E3%81%99/</link>
+      <link>http://mino0123.github.io/2015/03/11/lightning%E3%81%AFjs%E3%81%A6%E3%82%99%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%92%E6%8F%A1%E3%82%8A%E3%81%A4%E3%81%B5%E3%82%99%E3%81%99/</link>
       <pubDate>Wed, 11 Mar 2015 12:10:00 JST</pubDate>
       <author>Enthusiastic Hugo User</author>
-      <guid>http://mino0123.github.io/2015/03/11/Lightning%E3%81%AFJS%E3%81%A6%E3%82%99%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%92%E6%8F%A1%E3%82%8A%E3%81%A4%E3%81%B5%E3%82%99%E3%81%99/</guid>
+      <guid>http://mino0123.github.io/2015/03/11/lightning%E3%81%AFjs%E3%81%A6%E3%82%99%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%92%E6%8F%A1%E3%82%8A%E3%81%A4%E3%81%B5%E3%82%99%E3%81%99/</guid>
       <description>&lt;p&gt;理由は&lt;a href=&#34;http://mino0123.github.io/2014/12/17/Lightning%E9%96%8B%E7%99%BA%E8%80%85%E3%82%AC%E3%82%A4%E3%83%89%E3%81%A7%E7%B4%B9%E4%BB%8B%E3%81%95%E3%82%8C%E3%81%A6%E3%82%8B%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B%E9%96%A2%E6%95%B0/&#34;&gt;Lightning開発者ガイドで紹介されてるログ出力関数&lt;/a&gt;で書いたのと同じ。&lt;/p&gt;
 
 &lt;p&gt;JSコントローラ内でエラーが発生すると $A.$warning$ にエラーが渡されるが&lt;/p&gt;
@@ -54,10 +140,10 @@ var url = &#39;/one/one.app#&#39; + hash;
     
     <item>
       <title>Force.com CLI &#43; peco</title>
-      <link>http://mino0123.github.io/2015/03/10/ForceCLI&#43;peco/</link>
+      <link>http://mino0123.github.io/2015/03/10/forceclipeco/</link>
       <pubDate>Tue, 10 Mar 2015 23:00:25 JST</pubDate>
       <author>Enthusiastic Hugo User</author>
-      <guid>http://mino0123.github.io/2015/03/10/ForceCLI&#43;peco/</guid>
+      <guid>http://mino0123.github.io/2015/03/10/forceclipeco/</guid>
       <description>&lt;p&gt;ふと思い立ってやってみた。&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;force query &amp;quot;select Id, Name from Contact where AccountId=&#39;$(force query select Id, Name from Account | peco | cut -c 2-19)&#39;&amp;quot;
@@ -71,10 +157,10 @@ var url = &#39;/one/one.app#&#39; + hash;
     
     <item>
       <title>Lightning開発者ガイドで紹介されてるログ出力関数</title>
-      <link>http://mino0123.github.io/2014/12/17/Lightning%E9%96%8B%E7%99%BA%E8%80%85%E3%82%AB%E3%82%99%E3%82%A4%E3%83%88%E3%82%99%E3%81%A6%E3%82%99%E7%B4%B9%E4%BB%8B%E3%81%95%E3%82%8C%E3%81%A6%E3%82%8B%E3%83%AD%E3%82%AF%E3%82%99%E5%87%BA%E5%8A%9B%E9%96%A2%E6%95%B0/</link>
+      <link>http://mino0123.github.io/2014/12/17/lightning%E9%96%8B%E7%99%BA%E8%80%85%E3%82%AB%E3%82%99%E3%82%A4%E3%83%88%E3%82%99%E3%81%A6%E3%82%99%E7%B4%B9%E4%BB%8B%E3%81%95%E3%82%8C%E3%81%A6%E3%82%8B%E3%83%AD%E3%82%AF%E3%82%99%E5%87%BA%E5%8A%9B%E9%96%A2%E6%95%B0/</link>
       <pubDate>Wed, 17 Dec 2014 00:26:51 JST</pubDate>
       <author>Enthusiastic Hugo User</author>
-      <guid>http://mino0123.github.io/2014/12/17/Lightning%E9%96%8B%E7%99%BA%E8%80%85%E3%82%AB%E3%82%99%E3%82%A4%E3%83%88%E3%82%99%E3%81%A6%E3%82%99%E7%B4%B9%E4%BB%8B%E3%81%95%E3%82%8C%E3%81%A6%E3%82%8B%E3%83%AD%E3%82%AF%E3%82%99%E5%87%BA%E5%8A%9B%E9%96%A2%E6%95%B0/</guid>
+      <guid>http://mino0123.github.io/2014/12/17/lightning%E9%96%8B%E7%99%BA%E8%80%85%E3%82%AB%E3%82%99%E3%82%A4%E3%83%88%E3%82%99%E3%81%A6%E3%82%99%E7%B4%B9%E4%BB%8B%E3%81%95%E3%82%8C%E3%81%A6%E3%82%8B%E3%83%AD%E3%82%AF%E3%82%99%E5%87%BA%E5%8A%9B%E9%96%A2%E6%95%B0/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://developer.salesforce.com/docs/atlas.ja-jp.lightning.meta/lightning/debug_log_messages.htm&#34;&gt;https://developer.salesforce.com/docs/atlas.ja-jp.lightning.meta/lightning/debug_log_messages.htm&lt;/a&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;
@@ -193,10 +279,10 @@ JSTESTとJSTESTDEBUGにいたっては内部サーバーエラーになった。
     
     <item>
       <title>Lightning App Builder</title>
-      <link>http://mino0123.github.io/2014/12/14/LightningAppBuilder/</link>
+      <link>http://mino0123.github.io/2014/12/14/lightningappbuilder/</link>
       <pubDate>Sun, 14 Dec 2014 06:00:00 JST</pubDate>
       <author>Enthusiastic Hugo User</author>
-      <guid>http://mino0123.github.io/2014/12/14/LightningAppBuilder/</guid>
+      <guid>http://mino0123.github.io/2014/12/14/lightningappbuilder/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;http://qiita.com/advent-calendar/2014/salesforce1&#34;&gt;Salesforce1 Advent Calendar&lt;/a&gt;
