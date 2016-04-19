@@ -10,10 +10,10 @@
     
     <item>
       <title>ブログを新しくした</title>
-      <link>http://mino0123.github.io/2014/12/07/%E6%96%B0%E3%83%95%E3%82%99%E3%83%AD%E3%82%AF%E3%82%99/</link>
+      <link>http://mino0123.github.io/2014/12/07/new_blog/</link>
       <pubDate>Sun, 07 Dec 2014 04:00:00 JST</pubDate>
       <author>Enthusiastic Hugo User</author>
-      <guid>http://mino0123.github.io/2014/12/07/%E6%96%B0%E3%83%95%E3%82%99%E3%83%AD%E3%82%AF%E3%82%99/</guid>
+      <guid>http://mino0123.github.io/2014/12/07/new_blog/</guid>
       <description>
 
 &lt;p&gt;golang製の静的サイトジェネレータである &lt;a href=&#34;http://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; を使った。&lt;/p&gt;
@@ -64,7 +64,7 @@
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;追記:04be4ca2e04ad3019e50890afab58a4b&#34;&gt;追記&lt;/h3&gt;
+&lt;h3 id=&#34;追記:f56fb4c3ce511076d3f0c4a9fc83b8a1&#34;&gt;追記&lt;/h3&gt;
 
 &lt;p&gt;静的ファイルの追加が何故か1フォルダしか行われていなかった。
 chtimeで権限エラーになっていた。
