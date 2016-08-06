@@ -1,0 +1,549 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/css/reveal.css">
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/css/theme/beige.css">
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/lib/js/head.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/js/reveal.js"></script>
+<style>
+	.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+		text-transform: inherit !important;
+	}
+	.reveal .slides {
+		text-align: inherit;
+	}
+	.slides table {
+		border-spacing: 0;
+		border-collapse: collapse;
+		empty-cells: show;
+		width: 100%;
+	}
+	.slides table td, .slides table th {
+		border: 1px solid #ccc;
+		text-align: center;
+	}
+	.slides table td:first {
+		color: red;
+	}
+	.slides li {
+		padding-bottom: 5px;
+	}
+	.slides li li {
+		font-size: 75%;
+	}
+	.description {
+		font-size: 70% !important;
+	}
+	.pale {
+		color: #ddd;
+	}
+	.reveal li p {
+		margin: 10px 0;
+	}
+</style>
+	<title>2016/06/22 Tokyo Salesforce Developer Group meetup#12 Summer'16-Lightning </title>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+<section data-markdown data-separator="\n---\n$" data-vertical="\n--\n">
+<script type="text/template">
+
+
+
+## Salesforce Summer '16
+
+Lightningコンポーネント
+
+<small><small>
+https://releasenotes.docs.salesforce.com/ja-jp/summer16/release-notes/rn_lightning.htm
+</small></small>
+
+---
+
+今日話すのは
+
+## Salesforce Summer '16
+
+Lightningコンポーネント <span style="color:red;">の落とし穴</span>
+
+---
+
+通常の情報については[開発者向け 新機能Webinar](https://www.youtube.com/watch?v=E5_4giFuMYE)
+
+をご覧ください。
+
+
+<small>
+
+* アクセス権チェックエラーの適用
+([52:30](https://www.youtube.com/watch?v=E5_4giFuMYE#t=52m30s))
+
+* Locker Service
+([53:23](https://www.youtube.com/watch?v=E5_4giFuMYE#t=53m23s))
+
+* Salesforce Lightning CLI ツール
+([58:53](https://www.youtube.com/watch?v=E5_4giFuMYE#t=58m53s))
+
+* Salesforce Lightning Inspector
+([59:26](https://www.youtube.com/watch?v=E5_4giFuMYE#t=59m26s))
+
+* $Resourceによる静的リソースの参照
+([1:00:26](https://www.youtube.com/watch?v=E5_4giFuMYE#t=1h00m25s))
+
+* Lightningデザイントークン
+([1:00:43](https://www.youtube.com/watch?v=E5_4giFuMYE#t=1h00m43s))
+
+<!-- 日本語ドキュメントにページがない。 -->
+<!-- https://developer.salesforce.com/docs/atlas.en-us.lightning.meta/lightning/tokens_using.htm -->
+
+* 中止可能なアクション
+([1:00:43](https://www.youtube.com/watch?v=E5_4giFuMYE#t=1h01m03s))
+
+* join 式を使用したマークアップの可読性の向上
+([1:01:08](https://www.youtube.com/watch?v=E5_4giFuMYE#t=1h01m08s))
+
+* 追加/変更されたコンポーネント
+([1:01:27](https://www.youtube.com/watch?v=E5_4giFuMYE#t=1h01m27s))
+
+</small>
+
+---
+
+### $Resource
+
+<small>
+[$Resource グローバル値プロバイダを使用した静的リソースの参照](https://releasenotes.docs.salesforce.com/ja-jp/summer16/release-notes/rn_lightning_resource_gvp.htm)
+</small>
+
+```
+$A.get('$Resource.resourceName')
+```
+<small>で静的リソースのURLを取得できる機能。</small>
+
+----
+
+<small>現在、LEX上で2回ページを開いた後で実行するとエラーになる。</small>
+
+	`TypeError: valueProvider.get is not a function(…)`
+
+---
+
+原因は
+[Storage Service](https://developer.salesforce.com/docs/atlas.en-us.lightning.meta/lightning/storage_overview.htm)
+との組み合わせっぽい。
+
+LEXでは ValueProvider を IndexedDB に保存している。
+
+---
+
+<small>
+
+/l/{"mode":"PRODDEBUG","app":"one:one","loaded":{"APPLICATION@markup://one:one":"NRYw4XaJ6u61jC4_l9chhA"},"requestedLocales":["ja","en_US","en"],"ls":"E"}/resources.js?version=1464065424000
+
+<pre><code data-trim data-noescape>
+var staticResourceMMap = {
+  "MyResource1":{
+    "":1456295514000
+  },
+  "MyResource2":{
+    "":1451019379000
+  }
+};
+
+(function() { 
+	 if (!$A.getContext() || !$A.get('$Resource')) { 
+		 $A.addValueProvider('$Resource', 
+		<mark>{ 
+			 get : function(qualifiedName) { 
+				 var ns, name; 
+				 var nsDelim = qualifiedName.indexOf('__'); 
+				 if (nsDelim >= 0) { ns = qualifiedName.substring(0, nsDelim); name = qualifiedName.substring(nsDelim + 2); } else { name = qualifiedName;  } 
+				 var srMap = staticResourceMMap[name]; 
+				 if (!srMap) { return null;} 
+				 if (!ns) { ns = Object.keys(srMap)[0] } 
+				 var modStamp = srMap[ns];  
+				 if (!modStamp) { return null;} 
+				 var pathPrefix = $A.get('$SfdcSite.pathPrefix'); 
+				 return ((pathPrefix) ? pathPrefix : '') + '/resource/' + modStamp + '/' + ((ns ==='') ? name : ns + '__' + name); 
+			 } 
+		 }</mark>>);
+	 } 
+})();
+</code></pre>
+
+</small>
+
+---
+
+<small>
+getが関数だがストレージサービスが発動すると文字列としてIndexedDBに格納され、
+
+復元しても文字列なのでそれを関数として実行しようとするタイミングで落ちる。
+
+----
+<small>
+ちなみにGlobalValueProviderオブジェクトはデバッグモードをONにして
+コンソールから`$A.getContext().$globalValueProviders$`を実行すると参照できる。
+</small>
+</small>
+
+---
+
+## Locker Service
+
+<small><small>
+https://releasenotes.docs.salesforce.com/ja-jp/summer16/release-notes/rn_lightning_locker.htm
+</small></small>
+
+---
+
+### LockerServiceが行うJavaScriptの改変イメージ
+
+<pre><code data-trim data-noescape>
+<mark>with</mark> ({
+	window: SecureWindow(window),
+	document: SecureDocument(document),
+	Document: undefined,
+	HTMLElement: undefined,
+	// .
+	// .
+	// .
+}) {
+	(function () {
+		<mark>'use strict'</mark>;
+		// ここに定義したJavaScript
+	})();
+}
+</code></pre>
+
+---
+
+### with文
+
+通常window変数は上書きできない。
+
+```js
+window = {};
+console.log(window.toString());//=> [object Window]
+```
+
+ので、Locker Serviceは代入以外の方法でwindowキーワードでアクセスできるオブジェクトを変更する必要がある。
+
+---
+
+[with - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/with)
+
+> <small>混乱させるバグや互換性問題の原因になり得るため、with 文の使用は推奨されません</small>
+> ...
+> 
+> <small>with 文は、文に対するスコープチェーンを拡張します。</small>
+
+---
+
+```
+var a, x, y;
+var r = 10;
+
+a = Math.PI * r * r;
+x = r * Math.cos(Math.PI);
+y = r * Math.sin(Math.PI / 2);
+```
+
+```
+var a, x, y;
+var r = 10;
+
+with (Math) {
+  a = PI * r * r;
+  x = r * cos(PI);
+  y = r * sin(PI / 2);
+}
+```
+
+---
+
+with文を使えば`window`というキーワードへの参照を変更できる
+
+<pre><code data-trim data-noescape>
+console.log(window.toString());//=> <mark>[object Window]</mark>
+with ({window: {}}) {
+	console.log(window.toString());//=> <mark>[object Object]</mark>
+}
+</code></pre>
+
+---
+
+これだけだとdeleteで削除するとアクセス可能になる。
+
+<pre><code data-trim data-noescape>
+with ({window: {}}) {
+	console.log(window.toString());//=> [object Object]
+	delete window;
+	console.log(window.toString());//=> <mark>[object Window]</mark>
+}
+</code></pre>
+
+---
+
+### use strict
+
+[Strict モード - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Strict_mode)
+
+	strict モードでは、通常の JavaScript の意味にいくつかの変更を加えます。
+	第一に strict モードでは、JavaScript でエラーではないが落とし穴になる
+	一部の事柄を、エラーが発生するように変更することで除去します。
+
+---
+
+<pre><code data-trim data-noescape>
+// <mark>SyntaxError: applying the 'delete' operator to an unqualified name is deprecated</mark>
+with ({window: {}}) {
+	(function () {
+		'use strict';
+		delete window;
+	})();
+}
+</code></pre>
+
+<small>
+> strict モードでは、単純名の削除を禁止します。<br />
+> strict モードでは delete name を構文エラーにします:
+</small>
+
+---
+
+<pre><code data-trim data-noescape>
+(function () {
+	console.log(this.toString());//=> <mark>[object Window]</mark>
+})();
+</code></pre>
+
+<pre><code data-trim data-noescape>
+(function () {
+	'use strict';
+	console.log(this);//=> <mark>undefined</mark>
+})();
+</code></pre>
+
+<small>
+> strict モードでは、this として関数に渡された値をオブジェクトへボクシングしません。<br />
+> 非ストリクトモードでの関数にとって...(中略)...undefined または null の this で呼び出された時はグローバルオブジェクトとなります。
+</small>
+
+---
+
+ちなみにstrictモード内ではwithも禁止されている。
+
+<pre><code data-trim data-noescape>
+//<mark>SyntaxError: strict mode code may not contain 'with' statements</mark>
+'use strict';
+with ({}) {}
+</code></pre>
+
+LockerServiceでwithとstrictモードが両方使えるのはuse strictの効果は同じスコープ内のみに有効だから。
+
+---
+
+#### instanceof 禁止
+
+[instanceof の代わりに JavaScript の標準メソッドを使用](https://releasenotes.docs.salesforce.com/ja-jp/summer16/release-notes/rn_lightning_locker.htm)
+
+<small>
+> instanceof 演算子は、複数のウィンドウまたはフレームが存在する可能性があるため信頼性が低下します。変数種別を判断する場合は、代わりに typeof を使用するか、JavaScript の標準メソッド (Array.isArray() など) を使用します。
+</small>
+
+instanceof はtrue/falseを返すだけの演算子で、セキュリティとは関係ない。
+
+信頼性が低下するだけでなぜ禁止を強制する必要があるのか?
+
+---
+
+#### instanceof 禁止
+
+incetanceof を使うコードは全オブジェクトを
+[Secure*](https://github.com/forcedotcom/aura/tree/master/aura-impl/src/main/resources/aura/locker)
+でラップor削除するLockerService上で動作しない。
+
+しかしLockerServiceが対応すると言っているフレームワークはどれもinstanceofを使っている。
+
+* [jQuery](https://github.com/jquery/jquery/search?utf8=%E2%9C%93&q=instanceof)
+* [AngularJS v1](https://github.com/angular/angular.js/search?utf8=%E2%9C%93&q=instanceof)
+* [AngularJS v2](https://github.com/angular/angular/search?utf8=%E2%9C%93&q=instanceof)
+* [React](https://github.com/facebook/react/search?utf8=%E2%9C%93&q=instanceof)
+
+---
+
+[bootstrap-slider](https://github.com/seiyria/bootstrap-slider/blob/master/dist/bootstrap-slider.js#L322-L326)では引数の型によって処理を返るためにinstanceofを使用していた。
+
+```
+function createNewSlider(element, options) {
+	if (typeof element === 'string') {
+		this.element = document.querySelector(element);
+	} else if (element instanceof HTMLElement) {
+		this.element = element;
+	}
+	// .
+	// .
+	// .
+}
+```
+
+---
+
+LockerService内からraw windowの取得(eval未使用)
+
+<pre><code data-trim data-noescape>
+({
+	init : function(component, event, helper) {
+		var doc;
+		<mark>Function.prototype.apply = </mark>function (thisArg, args) {
+			if (!doc && thisArg && thisArg.toString() === '[object Window]') {
+				doc = thisArg.document;
+				var el = doc.getElementsByClassName('content')[0];
+				el.style.backgroundColor = 'red';
+				var images = el.getElementsByTagName('img');
+				for (var i = 0; i < images.length; i++) {
+					images[i].style.backgroundColor = 'red';
+				}
+				component.set('v.html', el.innerHTML);
+			}
+			args = args || [];
+			return this.call(thisArg, args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19]);
+		};
+	}
+})
+</code></pre>
+
+<small>
+組み込み関数を上書きしてLockerService外のJSがwindowを渡してくるのを待つ。
+
+現在のLightningは定期的に実行する処理の中でapplyが使用されている
+</small>
+
+---
+
+### Locker Serviceの抱えている問題点
+
+---
+
+* ライブラリに関してまともに動作確認ができてなさそう
+	* [jQuery2.2,Angular1.5,React0.4に対応というメッセージのコミット](https://github.com/forcedotcom/aura/commit/263d4fc6f8157b2a10315aa7a4b8dfaf14081e6c)(2016/4/8)があったのでReact確認したら動かなかった(バージョンv0.14だけど)
+		* 0.4(2013年12月18日)とか確認する気にもならない
+		* 0.14は2016/03/30だしtypoなはず(動かないけど)
+	* 調べたらnextSibling/previousSiblingが存在しなかった
+	* それ別のライブラリもダメでは？jQueryとかnext()あるし
+	* ライブラリの読み込み程度しか確認できてないのでは？
+
+---
+
+* なにを基準にホワイトリストを作っているのかわからない
+	* nextSibling/previousSiblingが抜けるのはおかしい
+	* 他にも色々(input[type=file].files, select.options)
+	* [更新が頻繁](https://github.com/forcedotcom/aura/commits/master/aura-impl/src/main/resources/aura/locker) > 単純に抜けているものが多い
+	* 除外されているプロパティについて、理由がソースから読み解けない
+
+---
+
+何を目指しているのか分からない
+* LockerServiceの想定しているセキュリティとは
+	* 行儀の悪いコンポーネント提供者による混乱を防ぐこと？
+		* この方針であれば将来的に実現が可能
+		* しかし現状LockerService自体による害の方が大きい
+	* コンポーネント提供者に悪意があっても組織情報が盗まれないようにすること？
+		* 現状防げてない
+
+---
+
+
+### 将来のJavaScriptとの互換性
+
+JavaScriptのセキュリティは基本的にオリジンをベースとして作られている。
+
+	オリジン = URLの スキーム/ポート/ホスト の組み合わせ
+
+<pre><code data-trim data-noescape>
+<mark>http</mark>://example.com/path?param=value#hash
+<mark>https</mark>://exapmle.com/path?param=value#hash
+</code></pre>
+<pre><code data-trim data-noescape>
+http://example.com:<mark>1111</mark>/path?param=value#hash
+http://example.com:<mark>2222</mark>/path?param=value#hash
+</code></pre>
+<pre><code data-trim data-noescape>
+http://<mark>example1.com</mark>/path?param=value#hash
+http://<mark>example2.com</mark>/path?param=value#hash
+</code></pre>
+
+LockerServiceの使っている with や strictモード は同一オリジンの中で異なるベンダーのスクリプト間のセキュリティを担保する用途で使用されることなんて想定されてない(はず)。
+
+---
+
+今回私が見つけた範囲の問題は対応が可能。
+
+しかしこれからも見つける問題は解決可能なのか。
+
+将来的にJavaScriptにLockerServiceが破綻するような機能が追加されたらどうするのか。
+
+ブラウザ側にはSalesforceの事情を考慮する義理はないのでありえない話ではない。
+
+---
+
+
+おわり
+
+
+</script>
+
+<!--
+
+まとめ
+
+---
+
+* 現在の問題
+	* windowへのアクセスを防げていない
+		* 本気の攻撃を想定しているならば今のLockerServiceは特にセキュリティを向上できてない
+	* ホワイトリスト少なすぎ
+	* ライブラリが使えないケース
+		* ライブラリ作成者にはSaelsforceの事情を考慮する義理はない
+* 将来における問題
+	* 本物のwindowにアクセスする方法が1つでも見つかったらそこから芋づる式に様々な情報にアクセスできる
+	* JavaScriptと互換性を保てない可能性
+		* ブラウザにはSalesforceの事情を考慮する義理はない
+
+---
+
+-->
+
+</section>
+
+			</div>
+		</div>
+
+
+<script>
+var revealpath = 'http://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/';
+Reveal.initialize({
+	controls: true,
+	progress: true,
+	slideNumber: true,
+	history: true,
+	keyboard: true,
+	overview: true,
+	center: true,
+	loop: true,
+	theme: Reveal.getQueryHash().theme,
+	transition: Reveal.getQueryHash().transition || 'concave',
+	dependencies: [
+		{ src: revealpath + 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+		{ src: revealpath + 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+		{ src: revealpath + 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+		{ src: revealpath + 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+		// { src: revealpath + 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+	]
+});
+</script>
+	</body>
+</html>
