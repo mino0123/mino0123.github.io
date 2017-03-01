@@ -1,0 +1,302 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/css/reveal.css">
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/css/theme/beige.css">
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/lib/js/head.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/js/reveal.js"></script>
+<style>
+	.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+		text-transform: inherit !important;
+	}
+	.reveal .slides {
+		text-align: inherit;
+	}
+	.slides table {
+		border-spacing: 0;
+		border-collapse: collapse;
+		empty-cells: show;
+		width: 100%;
+	}
+	.slides table td, .slides table th {
+		border: 1px solid #ccc;
+		text-align: center;
+	}
+	.slides table td:first {
+		color: red;
+	}
+	.slides li {
+		padding-bottom: 5px;
+	}
+	.slides li li {
+		font-size: 75%;
+	}
+	.description {
+		font-size: 70% !important;
+	}
+	.pale {
+		color: #ddd;
+	}
+	.reveal li p {
+		margin: 10px 0;
+	}
+</style>
+	<title>2017/03/01 Salesforce Developers Meetup #14 LockerService </title>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+<section data-markdown data-separator="\n---\n$" data-vertical="\n--\n">
+
+
+<!--
+https://developer.salesforce.com/blogs/developer-relations/2017/02/lockerservice-lightning-container-third-party-libraries-lightning-components.html
+-->
+<script type="text/template">
+
+
+
+# LockerServiceの現状
+
+---
+
+## LockerServiceとは
+
+---
+
+複数の異なるベンダーのコンポーネントが一つのページ上で動作するLightningフレームワーク環境において、
+セキュリティ担保のためにコンポーネントが別のコンポーネントが持つ情報にアクセスできないようにする仕組み
+
+<small><small>
+前回(meetup#12 2016/6/22)の資料は<a href="http://mino0123.github.io/slides/20160622-meetup-summer16_lightning.html#/7">こちら</a>
+</small></small>
+
+
+
+2017年6月 強制有効化の予定
+
+---
+
+プロパティアクセスのイメージ
+
+
+```
+function SecureObject(raw) {
+	var descriptors = {};
+	for (var i in raw) {
+		descriptors[i] = {
+			get: function () {
+				var v = raw[i];
+				var t = typeof v;
+				if (t === 'string') {
+					return v;
+				}
+				return new SecureObject(v);
+			}
+		};
+	}
+	descriptors.toString = { value: function () { return '[SecureObject]'; } };
+	Object.defineProperties(this, descriptors);
+}
+```
+
+```
+var obj = { foo: { bar: 'baz' } };
+var so = new SecureObject(obj);
+console.log(so + "");//=> "[SecureObject]"
+console.log(so.foo + "");//=> "[SecureObject]"
+console.log(so.foo.bar);//=> "baz"
+```
+
+---
+
+JavaScriptではdefinePropertiesメソッドのgetプロパティでgetterを指定できる。
+getterの中で元のプロパティ値のSecure○○を新たに生成して返す。
+
+<small>
+※ 実際には分岐やホワイトリストによるフィルタリングが入る。
+</small>
+
+---
+
+## 最近のLockerService
+
+---
+
+* サポートしているプロパティが増えた。
+	* `<input type="file" />` の files
+	* nextSibling / previousSibling
+	* `<a>link</a>` の onclick
+	* style
+
+Lightning上で自分でJSを書く分には不都合なかったり回避ができたりする。
+
+---
+
+## 最近遭遇した問題
+
+---
+
+### タッチ座標が取得できない
+
+イベントオブジェクトにtouchesプロパティがない。
+
+```
+element.addEventListener('touchstart', function (ev) {
+	console.log(ev.touches);// => undefined
+});
+```
+
+* iOSだとエラーになる
+* Androidやデスクトップブラウザのエミュレーションだと取得できない
+
+=> Spring'17で修正済み
+
+---
+
+### コメントノード
+
+コメントノードのnextSibling,previousSiblingがなく、React(v15)の再描画に影響
+
+---
+
+### instanceof
+
+React内部で使用しているkeyMirrorでエラーが発生
+
+<small>https://github.com/STRML/keyMirror/blob/master/index.js#L41</small>
+
+<small>実質12行のパッケージ。</small>
+
+`({} instanceof Object)`がfalseになっていた。
+
+<small>
+
+* 2/16動かないことを確認
+* 2/22になったら動いていた
+
+</small>
+
+---
+
+## 結局LockerServiceは使えるのか
+
+---
+
+微妙。
+
+---
+
+* 使えるプロパティは増えている
+	* <small>Locker Service API Viewer: http://documentation.auraframework.org/lockerApiTest/index.app?aura.mode=DEV</small>
+
+----
+
+* ライブラリに関するテストが公開されてない
+* Salesforceへの適用されているバージョンや適用日が公開されてない
+	* 最新をとってきたら存在するプロパティがSalesforce上だと存在しない
+
+---
+
+ライブラリのサポートは拡大するのか問題
+
+<small>
+
+<a href="https://developer.salesforce.com/blogs/developer-relations/2017/02/lockerservice-lightning-container-third-party-libraries-lightning-components.html">最近のブログ</a>に書かれたサポートライブラリとバージョンは以下
+
+| ライブラリ | LockerService | 最新 |
+| ---- | ---- | ---- |
+| React | 0.14.8 | 15.4.2 |
+| ChartJS | 2.1.4 | 2.5.0 |
+| D3 | 4.4.0 | 4.6.0 |
+| Leaflet | 0.7.7 and 1.0.2 | 1.0.3 |
+| RxJS | Latest as of 12/5/16 | 12/22/16 |
+| Numeral.js | 2.1.4 | 2.0.4 |
+| Underscore.js | 1.8.3 | 1.8.3 |
+| FullCalendar | 3.1.0 | 3.2.0 |
+| Gauge.js | 1.2.1 | 1.3.2 |
+| jQuery | 2.2.2 and 2.2.4 | 3.1.1 |
+| jQuery UI | 1.11.4 | 1.12.1 |
+| DataTables | 1.10.12 | 1.10.13 |
+| Select2 | 4.0.3 | 4.0.3 |
+
+</small>
+
+---
+
+自分でJavaScriptを書く分には問題は少ないし回避できる可能性も結構ある。
+
+---
+
+ライブラリを使おうとすると懸念点が一気に増える
+
+---
+
+理想としては、ライブラリが持っているテストをLockerServiceが適用された環境で実行したい
+
+----
+
+* ライブラリのテストをSalesforce上で動くようにする？
+* LockerServiceを自分でビルドしてそれが適用された環境でテストが走るようにする？
+
+=> どっちもテストフレームワークとの兼ね合いによる
+
+---
+
+* 自作ビルド + JSDOM でプロパティを確認
+	* => 実際のブラウザとプロパティに差がある
+	* => SalesforceがGitHub最新より古いっぽい
+* Salesforce上で確認
+	* => ブラウザごとにenumerable設定が違うプロパティ
+	* TouchEvent#toucesのenumerableがブラウザ毎に違うなんて普通考慮しない
+
+本物の実行環境(各ブラウザ)と<br>
+本物のビルド環境(Salesforce)<br>
+の上でないとテストとしての意味が薄い。
+
+---
+
+まとめ
+
+---
+
+ライブラリ使いたければ素直に lightning:container 使え。
+
+---
+
+以上
+
+</script>
+
+
+</section>
+
+			</div>
+		</div>
+
+
+<script>
+var revealpath = 'http://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/';
+Reveal.initialize({
+	controls: true,
+	progress: true,
+	slideNumber: true,
+	history: true,
+	keyboard: true,
+	overview: true,
+	center: true,
+	loop: true,
+	theme: Reveal.getQueryHash().theme,
+	transition: Reveal.getQueryHash().transition || 'concave',
+	dependencies: [
+		{ src: revealpath + 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+		{ src: revealpath + 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+		{ src: revealpath + 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+		{ src: revealpath + 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+		// { src: revealpath + 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+	]
+});
+</script>
+	</body>
+</html>
